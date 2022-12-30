@@ -1,13 +1,22 @@
 export class HorseGame {
 
-    players: string[];
-    numRounds: number;
 
+    public id: string;
+    public players: string[];
+    public numRounds: number;
+
+    public static allGames : HorseGame[];
+
+    // rounds start from 1
     rounds: Map<number, Map<string, number>>;
 
     horses: Map<number, Map<string, boolean>>;
 
     constructor(players: string[], rounds: number){
+        if(HorseGame.allGames == null){
+            HorseGame.allGames = new Array();
+        }
+        this.id = (+new Date * Math.random()).toString(36).substring(0,8) 
         this.players = players;
         this.numRounds = rounds;
 
@@ -24,6 +33,7 @@ export class HorseGame {
                 horseMap.set(this.players[j], false);
             }
         }
+        HorseGame.allGames.push(this);
     }
 
     getSingleHorse(player: string, round: number){
@@ -56,5 +66,14 @@ export class HorseGame {
             }
         }
         return totalhorses;
+    }
+
+    static getGame(id: string): HorseGame{
+        for(let i =0; i < HorseGame.allGames.length; i++){
+            if(HorseGame.allGames[i].id === id){
+                return HorseGame.allGames[i];
+            }
+        }
+        return null;
     }
 }

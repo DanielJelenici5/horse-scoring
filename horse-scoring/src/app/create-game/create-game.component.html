@@ -1,0 +1,27 @@
+
+<section id="myForm">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value);">
+        <div class="form-group">
+            <label class="control-label" for="startingCards">How many cards in starting hand: </label>
+                <div>
+                    <input type="number" class="form-control input-lg" name="startingCards"  formControlName="startingHand" min="1">
+                </div>
+        </div>
+
+        <ng-container formArrayName="players" *ngFor="let player of players.controls; index as i">
+            <ng-container [formGroupName]="i">
+                <div class="form-group">
+                    <label class="control-label" for="playerName">Player: </label>
+                        <div>
+                            <input type="text" class="form-control input-lg" name="playerName"  formControlName="name">
+                        </div>
+                </div>
+            </ng-container>
+        </ng-container>
+                        
+        <button type="button" (click)="addPlayer()" class="btn btn-primary">Add Player</button>
+        <button type ="submit" class="btn btn-success" style="float: right;" >Create Game</button>
+        
+    </form>            
+</section>
+

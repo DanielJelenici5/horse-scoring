@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HorseGame } from '../model/horse-game.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-scoring-board',
@@ -8,8 +9,8 @@ import { HorseGame } from '../model/horse-game.model';
 })
 export class ScoringBoardComponent implements OnInit {
 
-  @Input() numPlayers: number;
-  @Input() startingCardNum: number;
+  numPlayers: number;
+  startingCardNum: number;
 
   game: HorseGame;
 
@@ -18,19 +19,19 @@ export class ScoringBoardComponent implements OnInit {
   tableColumns: string[];
 
 
-  constructor() {
+  constructor(private ActivedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.game =  new HorseGame(["danny","adrian"], 12);
+    this.game =  HorseGame.getGame(this.ActivedRoute.snapshot.paramMap.get("id")); 
+    this.numPlayers = this.game.players.length;
+    this.startingCardNum = this.game.numRounds/2;
     this.tableColumns = new Array()
     this.tableColumns.push("Round")
     this.tableColumns = this.tableColumns.concat(this.game.players)
 
     this.tableData = new Array();
     this.createTable()
-
-    this.game.setScore("danny",2,5);
 
   }
 
@@ -55,7 +56,6 @@ export class ScoringBoardComponent implements OnInit {
   }
 
   updateHorse(index, player){
-    console.log("double click")
     const oldHorseValue = this.game.getSingleHorse(player,index);
     this.game.setHorse(player,index,!oldHorseValue);
 

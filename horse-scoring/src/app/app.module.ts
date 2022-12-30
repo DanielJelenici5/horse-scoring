@@ -7,18 +7,29 @@ import { ScoringBoardComponent } from './scoring-board/scoring-board.component';
 
 import {MatTableModule} from '@angular/material/table'  
 import {MatSelectModule} from '@angular/material/select';
+import { HomePageComponent } from './home-page/home-page.component';
+
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { CreateGameComponent } from './create-game/create-game.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ScoringBoardComponent
+    ScoringBoardComponent,
+    HomePageComponent,
+    CreateGameComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatTableModule,
     MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
