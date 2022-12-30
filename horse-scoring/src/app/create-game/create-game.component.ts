@@ -46,7 +46,7 @@ export class CreateGameComponent implements OnInit {
       playerArray.push(values.players[i]["name"])
     }
 
-    const newGame: HorseGame = new HorseGame(playerArray, startingCardNum * 2);
+    const newGame: HorseGame = new HorseGame(playerArray, startingCardNum * 2, new Date());
 
     this.router.navigate(["/new-game", newGame.id])
   }

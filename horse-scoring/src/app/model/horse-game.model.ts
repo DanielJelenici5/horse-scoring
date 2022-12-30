@@ -4,6 +4,7 @@ export class HorseGame {
     public id: string;
     public players: string[];
     public numRounds: number;
+    public dateTime: Date;
 
     public static allGames : HorseGame[];
 
@@ -12,7 +13,7 @@ export class HorseGame {
 
     horses: Map<number, Map<string, boolean>>;
 
-    constructor(players: string[], rounds: number){
+    constructor(players: string[], rounds: number, dateTime: Date){
         if(HorseGame.allGames == null){
             HorseGame.allGames = new Array();
         }
@@ -21,7 +22,9 @@ export class HorseGame {
         this.numRounds = rounds;
 
         this.rounds = new Map();
-        this.horses = new Map()
+        this.horses = new Map();
+
+        this.dateTime = dateTime;
 
         for(let i = 1; i <= this.numRounds; i++){
             this.rounds.set(i,new Map());

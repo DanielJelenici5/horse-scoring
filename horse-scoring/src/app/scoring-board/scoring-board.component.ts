@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HorseGame } from '../model/horse-game.model';
 import { ActivatedRoute } from '@angular/router';
+import { DatabaseService } from '../database.service';
+import { DatabaseObject } from '../model/database-object.model';
 
 @Component({
   selector: 'app-scoring-board',
@@ -19,7 +21,7 @@ export class ScoringBoardComponent implements OnInit {
   tableColumns: string[];
 
 
-  constructor(private ActivedRoute: ActivatedRoute) {
+  constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService) {
   }
 
   ngOnInit(): void {
@@ -62,7 +64,10 @@ export class ScoringBoardComponent implements OnInit {
   }
 
   saveGame(){
-    
+    console.log("before save ")
+    const dbObject = new DatabaseObject(this.game)
+    this.databaseService.addData(dbObject)
+    console.log("after save ")
   }
 
 
