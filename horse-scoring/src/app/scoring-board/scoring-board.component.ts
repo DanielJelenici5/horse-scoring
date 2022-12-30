@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HorseGame } from '../model/horse-game.model';
 
-
-
 @Component({
   selector: 'app-scoring-board',
   templateUrl: './scoring-board.component.html',
@@ -49,9 +47,18 @@ export class ScoringBoardComponent implements OnInit {
     this.tableData.push("Total Horses")
   }
 
-  updateScore(index, player){
-    console.log(index)
-    console.log(player)
+  updateScore(index, player, score){
+    const parsedScore = parseInt(score)
+    if(!Number.isNaN(parsedScore)){
+      this.game.setScore(player,index, parsedScore)
+    }
+  }
+
+  updateHorse(index, player){
+    console.log("double click")
+    const oldHorseValue = this.game.getSingleHorse(player,index);
+    this.game.setHorse(player,index,!oldHorseValue);
+
   }
 
 

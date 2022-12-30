@@ -26,6 +26,10 @@ export class HorseGame {
         }
     }
 
+    getSingleHorse(player: string, round: number){
+        return this.horses.get(round).get(player)
+    }
+
     setScore(player: string, round: number, score: number){
         let roundMap: Map<string, number>  = this.rounds.get(round);
         roundMap.set(player, score);

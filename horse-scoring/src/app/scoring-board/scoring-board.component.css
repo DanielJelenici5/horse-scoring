@@ -6,3 +6,7 @@
 .mat-cell{
     text-align: center;
 }
+
+.horseBox{
+    border:solid 5px red; 
+}
