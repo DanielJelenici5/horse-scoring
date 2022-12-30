@@ -1,4 +1,6 @@
-<table mat-table [dataSource]="tableData">
+
+
+<table mat-table [dataSource]="tableData"  style="margin: 0px auto;">
 
     <ng-container matColumnDef="Round">
         <th mat-header-cell *matHeaderCellDef> Round </th>
@@ -23,3 +25,9 @@
     <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
 </table>
+
+<br>
+<div style="text-align: center;">
+    <button class="btn btn-primary" (click)="saveGame()" >Save Game</button>
+</div>
+

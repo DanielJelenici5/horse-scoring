@@ -61,5 +61,9 @@ export class ScoringBoardComponent implements OnInit {
 
   }
 
+  saveGame(){
+    
+  }
+
 
 }
