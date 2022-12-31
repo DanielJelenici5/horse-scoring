@@ -31,8 +31,6 @@ export class HomePageComponent implements OnInit {
   }
 
   gotoLeaderboard(){
-    console.log("clicked 1")
     this.router.navigate(['/leaderboard'])
-    console.log("clicked 2")
   }
 }

@@ -51,4 +51,16 @@ export class CreateGameComponent implements OnInit {
     this.router.navigate(["/new-game", newGame.id])
   }
 
+  saveFinalScore(values){
+    const startingCardNum: number = parseInt(values.startingHand) 
+    const playerArray : string[] = new Array();
+    for(let i =0; i < values.players.length; i++){
+      playerArray.push(values.players[i]["name"])
+    }
+
+    const newGame: HorseGame = new HorseGame(playerArray, startingCardNum * 2, new Date());
+
+    this.router.navigate(["/save-final-score", newGame.id])
+  }
+
 }

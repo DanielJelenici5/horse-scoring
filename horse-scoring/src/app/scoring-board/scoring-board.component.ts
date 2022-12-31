@@ -65,7 +65,7 @@ export class ScoringBoardComponent implements OnInit {
 
   saveGame(){
     console.log("before save ")
-    const dbObject = new DatabaseObject(this.game)
+    const dbObject = new DatabaseObject(this.game,null)
     this.databaseService.addData(dbObject)
     console.log("after save ")
   }

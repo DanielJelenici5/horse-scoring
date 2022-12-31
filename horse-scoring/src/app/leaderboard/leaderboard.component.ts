@@ -3,6 +3,7 @@ import { HorseGame } from '../model/horse-game.model';
 import { PlayerStats } from '../model/player-stats.model';
 
 import {MatSort, Sort} from '@angular/material/sort';
+import { StatCalcService } from '../stat-calc.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -13,17 +14,26 @@ export class LeaderboardComponent implements OnInit {
 
   allGames: HorseGame[];
 
-  constructor() {
+  constructor(private statCalcService: StatCalcService) {
     this.allGames = HorseGame.allGames;
    }
 
   ngOnInit(): void {
+    this.statCalcService.createStats();
+    this.updateTable()
+    
+   
   }
 
-  displayedColumns: string[] = ["Player", "Games Played", "Total Points", "Total Horses"];
+  displayedColumns: string[] = ["Player", "Games Played", "Games Won", "Total Points", "Total Horses"];
 
   sortedData: PlayerStats[];
   
+  async updateTable(){
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    await sleep(1500)
+    this.sortedData = PlayerStats.allPlayerStats;
+  }
 
   SortChange(sort: Sort) {
     const data = this.sortedData.slice();
@@ -36,6 +46,7 @@ export class LeaderboardComponent implements OnInit {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'Player': return this.compare(a.name, b.name, isAsc);
+        case 'Games Won': return this.compare(a.gamesWon, b.gamesWon, isAsc);
         case 'Games Played': return this.compare(a.gamesPlayed, b.gamesPlayed, isAsc);
         case 'Total Points': return this.compare(a.totalPoints, b.totalPoints, isAsc);
         case 'Total Horses': return this.compare(a.totalHorses, b.totalHorses, isAsc);

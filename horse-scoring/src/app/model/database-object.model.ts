@@ -7,36 +7,15 @@ export class DatabaseObject {
     public players: string[];
     public numRounds: number;
 
-    public rounds;
-    public horses;
+    public scores; //ex: {"Danny": [10,2]}
 
-    constructor(game: HorseGame){
+    constructor(game: HorseGame, scores){
         this.id = game.id;
         this.dateTime = game.dateTime;
         this.players = game.players;
         this.numRounds = game.numRounds;
 
-        this.rounds = this.mapToJson(game.rounds)
-        this.horses = this.mapToJson(game.horses)
+        this.scores = scores
+
     }
-
-
-    mapToJson(map){
-        const toObject = (map = new Map) =>
-        Object.fromEntries
-          ( Array.from
-              ( map.entries()
-              , ([ k, v ]) =>
-                  v instanceof Map
-                    ? [ k, toObject (v) ]
-                    : [ k, v ]
-              )
-          )
-
-          return toObject(map);
-    }
-
-   
-    
-
 }
