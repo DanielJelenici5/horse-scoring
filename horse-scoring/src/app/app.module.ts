@@ -15,6 +15,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CreateGameComponent } from './create-game/create-game.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+
+import { MatSortModule } from '@angular/material/sort';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -22,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     ScoringBoardComponent,
     HomePageComponent,
-    CreateGameComponent
+    CreateGameComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSortModule,
+    BrowserAnimationsModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

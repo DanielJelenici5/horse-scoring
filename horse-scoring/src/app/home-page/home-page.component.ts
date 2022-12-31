@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, ValidatorFn, ValidationErrors, AbstractControl, FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
+import { DatabaseService } from '../database.service';
+import { HorseGame } from '../model/horse-game.model';
 
 
 @Component({
@@ -11,18 +13,26 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent implements OnInit {
 
-
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
+    HorseGame.allGames = new Array();
+    this.databaseService.getAllData().then((response)=> {
+      for(let i = 0; i < response.length; i++){
+        const game = new HorseGame(response[i]["data"]["players"], response[i]["data"]["numRounds"], response[i]["data"]["dateTime"])
+        game.rounds = HorseGame.mapFromJson(response[i]["data"]["rounds"])
+        game.horses = HorseGame.mapFromJson(response[i]["data"]["horses"])
+      }
+     })
   }
-
 
   createNewGame(){
-    console.log("clicked")
     this.router.navigate(['/create-game'])
-    console.log("clicked2")
   }
 
+  gotoLeaderboard(){
+    console.log("clicked 1")
+    this.router.navigate(['/leaderboard'])
+    console.log("clicked 2")
+  }
 }

@@ -71,6 +71,19 @@ export class HorseGame {
         return totalhorses;
     }
 
+    static mapFromJson(obj){
+        const map = new Map();
+        for(const key in obj){
+            map.set(key, new Map())
+            for(const key2 in obj[key]){
+                let map2: Map<string, number>  = map.get(key);
+                map2.set(key2,obj[key][key2])
+            }
+        }
+      
+        return map
+    }
+
     static getGame(id: string): HorseGame{
         for(let i =0; i < HorseGame.allGames.length; i++){
             if(HorseGame.allGames[i].id === id){
