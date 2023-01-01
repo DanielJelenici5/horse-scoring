@@ -1,49 +1,50 @@
 <h1 style="text-align: center; ">{{ playerStat.name}}'s stats<h1>
+<br>
 
  <table mat-table [dataSource]="sortedData"  style="margin: 0px auto; ">
     <ng-container matColumnDef="Games Played">
-        <th mat-header-cell *matHeaderCellDef > Games Played </th>
-        <td mat-cell *matCellDef="let element"> {{element.gamesPlayed}} </td>
+        <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Games Played </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.gamesPlayed}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Games Won">
-        <th mat-header-cell *matHeaderCellDef > Games Won </th>
-        <td mat-cell *matCellDef="let element"> {{element.gamesWon}} </td>
+        <th mat-header-cell *matHeaderCellDef style="font-size: 20px" > Games Won </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.gamesWon}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Win %">
-        <th mat-header-cell *matHeaderCellDef > Win % </th>
-        <td mat-cell *matCellDef="let element"> {{(element.gamesWon / element.gamesPlayed).toFixed(2)}} </td>
+        <th mat-header-cell *matHeaderCellDef style="font-size: 20px" > Win % </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{(element.gamesWon / element.gamesPlayed).toFixed(2)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Total Points">
-        <th mat-header-cell *matHeaderCellDef > Total Points </th>
-        <td mat-cell *matCellDef="let element"> {{element.totalPoints}} </td>
+        <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Total Points </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.totalPoints}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Average Points per Game">
-        <th mat-header-cell *matHeaderCellDef > Average Points per Game </th>
-        <td mat-cell *matCellDef="let element"> {{(element.totalPoints / element.gamesPlayed).toFixed(2)}} </td>
+        <th mat-header-cell *matHeaderCellDef style="font-size: 20px" > Average Points per Game </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{(element.totalPoints / element.gamesPlayed).toFixed(2)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Average Points per Round">
-        <th mat-header-cell *matHeaderCellDef > Average Points per Round </th>
-        <td mat-cell *matCellDef="let element"> {{(element.totalPoints / element.roundsPlayed).toFixed(2)}} </td>
+        <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Average Points per Round </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{(element.totalPoints / element.roundsPlayed).toFixed(2)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Total Horses">
-        <th mat-header-cell *matHeaderCellDef > Total Horses </th>
-        <td mat-cell *matCellDef="let element"> {{element.totalHorses}} </td>
+        <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Total Horses </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.totalHorses}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Average Horses per Game">
-        <th mat-header-cell *matHeaderCellDef > Average Horses per Game </th>
-        <td mat-cell *matCellDef="let element"> {{(element.totalHorses / element.gamesPlayed).toFixed(2)}} </td>
+        <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Average Horses per Game </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{(element.totalHorses / element.gamesPlayed).toFixed(2)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Average Horses per Round">
-        <th mat-header-cell *matHeaderCellDef > Average Horses per Round </th>
-        <td mat-cell *matCellDef="let element"> {{(element.totalHorses / element.roundsPlayed).toFixed(2)}} </td>
+        <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Average Horses per Round </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{(element.totalHorses / element.roundsPlayed).toFixed(2)}} </td>
     </ng-container>
 
 
