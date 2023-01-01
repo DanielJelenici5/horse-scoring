@@ -24,6 +24,7 @@ export class StatCalcService {
      
    }
   async createStats(){
+    console.log("called createStats")
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500)
     

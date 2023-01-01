@@ -19,7 +19,10 @@ export class PlayerStatsComponent implements OnInit {
   constructor(private ActivedRoute: ActivatedRoute, private statCalcService: StatCalcService) { }
 
   ngOnInit(): void {
-   this.statCalcService.createStats();
+    if(PlayerStats.allPlayerStats.length == 0){
+      this.statCalcService.createStats();
+    }
+  
    this.wait()
 
   }

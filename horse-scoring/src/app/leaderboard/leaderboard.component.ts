@@ -20,7 +20,10 @@ export class LeaderboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.statCalcService.createStats();
+    if( PlayerStats.allPlayerStats.length == 0){
+      this.statCalcService.createStats();
+    
+    }
     this.updateTable()
     
    
