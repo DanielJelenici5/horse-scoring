@@ -3,7 +3,7 @@
 <table mat-table [dataSource]="sortedData" matSort (matSortChange)="SortChange($event)" style="margin: 0px auto;">
     <ng-container matColumnDef="Player">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Player </th>
-        <td mat-cell *matCellDef="let element"> <a href= "/player-stats/{{element.name}}">{{element.name}}</a> </td>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Games Played">
@@ -25,6 +25,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Horses </th>
         <td mat-cell *matCellDef="let element"> {{element.totalHorses}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="Total Horses">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Horses </th>
+        <td mat-cell *matCellDef="let element"> <button (click)="seeStats(element.name)">See Additional Stats</button> </td>
+    </ng-container>
+
+
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

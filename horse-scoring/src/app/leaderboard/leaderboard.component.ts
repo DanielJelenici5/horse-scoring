@@ -4,6 +4,7 @@ import { PlayerStats } from '../model/player-stats.model';
 
 import {MatSort, Sort} from '@angular/material/sort';
 import { StatCalcService } from '../stat-calc.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-leaderboard',
@@ -14,7 +15,7 @@ export class LeaderboardComponent implements OnInit {
 
   allGames: HorseGame[];
 
-  constructor(private statCalcService: StatCalcService) {
+  constructor(private statCalcService: StatCalcService, private router: Router) {
     this.allGames = HorseGame.allGames;
    }
 
@@ -57,6 +58,10 @@ export class LeaderboardComponent implements OnInit {
   }
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+seeStats(name){
+  this.router.navigate(["/player-stats", name])
 }
         
 
