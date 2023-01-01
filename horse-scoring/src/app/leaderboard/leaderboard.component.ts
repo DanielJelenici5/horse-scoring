@@ -26,7 +26,7 @@ export class LeaderboardComponent implements OnInit {
    
   }
 
-  displayedColumns: string[] = ["Player", "Games Played", "Games Won", "Total Points", "Total Horses"];
+  displayedColumns: string[] = ["Player", "Games Played", "Games Won", "Total Points", "Total Horses", "Additional Stats"];
 
   sortedData: PlayerStats[];
   
