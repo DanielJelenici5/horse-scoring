@@ -36,13 +36,8 @@
         <td mat-cell *matCellDef="let element"> {{element.totalHorses}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="Total Horses">
-        <th mat-header-cell *matHeaderCellDef > Total Horses </th>
-        <td mat-cell *matCellDef="let element"> {{element.totalHorses}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Avergae Horses per Game">
-        <th mat-header-cell *matHeaderCellDef > Avergae Horses per Game </th>
+    <ng-container matColumnDef="Average Horses per Game">
+        <th mat-header-cell *matHeaderCellDef > Average Horses per Game </th>
         <td mat-cell *matCellDef="let element"> {{(element.totalHorses / element.gamesPlayed).toFixed(2)}} </td>
     </ng-container>
 
