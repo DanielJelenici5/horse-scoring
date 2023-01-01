@@ -29,7 +29,6 @@ export class StatCalcService {
     
     for(let i =0; i < this.allDBObjects.length; i++){
       let dbObject: DatabaseObject = this.allDBObjects[i]
-      console.log(dbObject)
       for(let j = 0 ; j < dbObject.players.length; j++){
         if(!PlayerStats.playerStatsExist(dbObject.players[j])){
           new PlayerStats(dbObject.players[j])
@@ -38,6 +37,7 @@ export class StatCalcService {
       for(var player in dbObject.scores){
         var playerStats : PlayerStats = PlayerStats.getPlayerStats(player)
         playerStats.gamesPlayed++;
+        playerStats.roundsPlayed += dbObject.numRounds;
         playerStats.totalPoints += dbObject.scores[player][0]
         playerStats.totalHorses += dbObject.scores[player][1]
         this.giveWinStat(dbObject.scores, playerStats, player);

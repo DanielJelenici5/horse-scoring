@@ -21,6 +21,7 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SaveFinalScoreComponent } from './save-final-score/save-final-score.component';
+import { PlayerStatsComponent } from './player-stats/player-stats.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { SaveFinalScoreComponent } from './save-final-score/save-final-score.com
     HomePageComponent,
     CreateGameComponent,
     LeaderboardComponent,
-    SaveFinalScoreComponent
+    SaveFinalScoreComponent,
+    PlayerStatsComponent
   ],
   imports: [
     BrowserModule,

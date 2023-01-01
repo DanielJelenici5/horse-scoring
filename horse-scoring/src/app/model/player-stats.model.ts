@@ -10,17 +10,18 @@ export class PlayerStats {
     public gamesWon: number;
     public gamesLostOnPoints: number;
     public gamesLostOnHorses: number;
+    public roundsPlayed: number;
 
     constructor(name){
         this.name = name;
         PlayerStats.allPlayerStats.push(this);
-
         this.gamesPlayed = 0;
         this.totalHorses =0;
         this.totalPoints = 0;
         this.gamesWon = 0;
         this.gamesLostOnHorses = 0;
         this.gamesLostOnPoints = 0;
+        this.roundsPlayed = 0;
 
     }
 
