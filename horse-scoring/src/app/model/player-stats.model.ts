@@ -13,7 +13,7 @@ export class PlayerStats {
     public roundsPlayed: number;
 
     constructor(name){
-        this.name = name;
+        this.name = name.toLowerCase();
         PlayerStats.allPlayerStats.push(this);
         this.gamesPlayed = 0;
         this.totalHorses =0;
@@ -27,7 +27,7 @@ export class PlayerStats {
 
     public static playerStatsExist(name: string): boolean{
         for(let i =0; i < PlayerStats.allPlayerStats.length; i++){
-            if(PlayerStats.allPlayerStats[i].name === name){
+            if(PlayerStats.allPlayerStats[i].name.toLowerCase() === name.toLowerCase()){
                 return true;
             }
         }
@@ -36,7 +36,7 @@ export class PlayerStats {
 
     public static getPlayerStats(name: string): PlayerStats{
         for(let i =0; i < PlayerStats.allPlayerStats.length; i++){
-            if(PlayerStats.allPlayerStats[i].name === name){
+            if(PlayerStats.allPlayerStats[i].name.toLowerCase() === name.toLowerCase()){
                 return PlayerStats.allPlayerStats[i];
             }
         }
