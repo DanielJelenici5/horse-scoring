@@ -29,7 +29,7 @@ export class LeaderboardComponent implements OnInit {
    
   }
 
-  displayedColumns: string[] = ["Player", "Games Played", "Games Won", "Total Points", "Total Horses", "Additional Stats"];
+  displayedColumns: string[] = ["Player", "Games Played", "Games Won", "Points Per 12", "Total Points", "Total Horses", "Additional Stats"];
 
   sortedData: PlayerStats[];
   
@@ -46,11 +46,14 @@ export class LeaderboardComponent implements OnInit {
       return;
     }
 
+    
+
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'Player': return this.compare(a.name, b.name, isAsc);
         case 'Games Won': return this.compare(a.gamesWon, b.gamesWon, isAsc);
+        case 'Points Per 12': return this.compare(((a.totalPoints / a.roundsPlayed) *12 ).toFixed(2), ((b.totalPoints / b.roundsPlayed) *12 ).toFixed(2), isAsc);
         case 'Games Played': return this.compare(a.gamesPlayed, b.gamesPlayed, isAsc);
         case 'Total Points': return this.compare(a.totalPoints, b.totalPoints, isAsc);
         case 'Total Horses': return this.compare(a.totalHorses, b.totalHorses, isAsc);

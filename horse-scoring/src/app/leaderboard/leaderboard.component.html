@@ -15,6 +15,11 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Games Won </th>
         <td mat-cell *matCellDef="let element"> {{element.gamesWon}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="Points Per 12">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Points Per 12 </th>
+        <td mat-cell *matCellDef="let element"> {{((element.totalPoints / element.roundsPlayed) *12 ).toFixed(2)}} </td>
+    </ng-container>
     
     <ng-container matColumnDef="Total Points">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Points </th>
