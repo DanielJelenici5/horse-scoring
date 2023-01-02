@@ -23,6 +23,12 @@ export class PlayerStats {
         this.gamesLostOnPoints = 0;
         this.roundsPlayed = 0;
 
+        this.placementFinished = new Map()
+
+        for(let i =1; i <= 8; i++){
+            this.placementFinished.set(i,0)
+        }
+
     }
 
     public static playerStatsExist(name: string): boolean{

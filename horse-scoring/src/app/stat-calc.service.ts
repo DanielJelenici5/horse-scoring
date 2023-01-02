@@ -30,6 +30,7 @@ export class StatCalcService {
     
     for(let i =0; i < this.allDBObjects.length; i++){
       let dbObject: DatabaseObject = this.allDBObjects[i]
+      var scorePlacments = this.sortPlacement(dbObject.scores)
       for(let j = 0 ; j < dbObject.players.length; j++){
         if(!PlayerStats.playerStatsExist(dbObject.players[j])){
           new PlayerStats(dbObject.players[j])
@@ -44,8 +45,24 @@ export class StatCalcService {
         this.giveWinStat(dbObject.scores, playerStats, player);
         this.giveLosePointsStat(dbObject.scores, playerStats, player);
         this.giveLoseHorseStat(dbObject.scores, playerStats, player);
+  
+        this.updatePlacementStats(playerStats,scorePlacments)
       }
-      
+
+    }
+  }
+
+  sortPlacement(scores){
+    let keysSorted = Object.keys(scores).sort(function(a,b){return scores[b][0]-scores[a][0]})
+    return keysSorted
+  }
+
+  updatePlacementStats(playerStats,  scorePlacement){
+    for(let i=0; i <  scorePlacement.length; i++){
+      if(playerStats.name === scorePlacement[i]){
+        var placementFinish = playerStats.placementFinished.get(i+1);
+        playerStats.placementFinished.set(i+1,placementFinish + 1)
+      }
     }
   }
 
