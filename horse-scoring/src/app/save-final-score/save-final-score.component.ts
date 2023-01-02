@@ -47,7 +47,7 @@ export class SaveFinalScoreComponent implements OnInit {
   saveFinalScores(){
     console.log("before save ")
     const dbObject = new DatabaseObject(this.game, this.model)
-    //this.databaseService.addData(dbObject)
+    this.databaseService.addData(dbObject)
     this.notifierService.notify('success', 'Saved Scores!');
     console.log("after save ")
   }
