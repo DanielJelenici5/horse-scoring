@@ -24,6 +24,8 @@ import { SaveFinalScoreComponent } from './save-final-score/save-final-score.com
 import { PlayerStatsComponent } from './player-stats/player-stats.component';
 
 
+import { NotifierModule } from 'angular-notifier';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +46,8 @@ import { PlayerStatsComponent } from './player-stats/player-stats.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatSortModule,
-    BrowserAnimationsModule  
+    BrowserAnimationsModule,
+    NotifierModule   
   ],
   providers: [],
   bootstrap: [AppComponent]
