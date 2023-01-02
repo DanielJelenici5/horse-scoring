@@ -14,7 +14,7 @@ export class PlayerStatsComponent implements OnInit {
 
   sortedData: PlayerStats[];
 
-  displayedColumns: string[] = ["Games Played", "Games Won", "Win %", "Total Points", "Average Points per Game", "Average Points per Round", "Total Horses", "Average Horses per Game", "Average Horses per Round"];
+  displayedColumns: string[] = ["Games Played", "Games Won", "Win %", "Total Points", "Average Points per Game", "Average Points per Round", "Total Horses", "Average Horses per Game", "Average Horses per Round", "Total Losses By Points", "Total Losses By Horses"];
 
   constructor(private ActivedRoute: ActivatedRoute, private statCalcService: StatCalcService) { }
 
