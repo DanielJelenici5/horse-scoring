@@ -33,4 +33,8 @@ export class HomePageComponent implements OnInit {
   gotoLeaderboard(){
     this.router.navigate(['/leaderboard'])
   }
+
+  goToPastGames(){
+    this.router.navigate(['/past-games'])
+  }
 }

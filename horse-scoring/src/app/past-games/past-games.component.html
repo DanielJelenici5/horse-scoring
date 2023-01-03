@@ -1,0 +1,31 @@
+<h1 style="text-align: center; ">Past Games<h1>
+    <br>
+     <table mat-table [dataSource]="sortedData"  style="margin: 0px auto; ">
+        <ng-container matColumnDef="Date Played">
+            <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Date Played </th>
+            <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.dateTime}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Winner">
+            <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Winner </th>
+            <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.winner}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Loser By Points">
+            <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Loser By Points </th>
+            <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.loserPoints}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Loser By Horses">
+            <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Loser By Horses </th>
+            <td mat-cell *matCellDef="let element" style="font-size: 20px"> {{element.loserHorses}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Game Scores">
+            <th mat-header-cell *matHeaderCellDef  style="font-size: 20px"> Additional Statistics </th>
+            <td mat-cell *matCellDef="let element" style="font-size: 20px"> <button (click)="viewGameScore(element.gameId)" class="btn btn-primary">View Game Scores</button> </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>   

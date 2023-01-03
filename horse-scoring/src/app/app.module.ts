@@ -25,6 +25,8 @@ import { PlayerStatsComponent } from './player-stats/player-stats.component';
 
 
 import { NotifierModule } from 'angular-notifier';
+import { PastGamesComponent } from './past-games/past-games.component';
+import { SinglePastGameComponent } from './single-past-game/single-past-game.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { NotifierModule } from 'angular-notifier';
     CreateGameComponent,
     LeaderboardComponent,
     SaveFinalScoreComponent,
-    PlayerStatsComponent
+    PlayerStatsComponent,
+    PastGamesComponent,
+    SinglePastGameComponent
   ],
   imports: [
     BrowserModule,
