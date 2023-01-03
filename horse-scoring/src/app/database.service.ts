@@ -25,4 +25,14 @@ export class DatabaseService {
       console.log("Added data: " + data)
     })
   }
+
+  async getSingleDataObject(gameId: string): Promise<DatabaseObject>{
+    var returnData : DatabaseObject;
+    this.http.get<DatabaseObject>("https://272.selfip.net/apps/CLSkMKlYYi/collections/horse-scoring/documents/" + gameId + "/").subscribe((data: DatabaseObject)=>{
+      returnData = data
+  })
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  await sleep(1000)
+  return returnData
+  }
 }

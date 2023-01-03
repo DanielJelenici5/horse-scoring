@@ -57,7 +57,6 @@ export class PastGamesComponent implements OnInit {
         loserHorses: loserHorse.join(', '),
       }
       this.sortedData.push(gameObject)
-
     }
   }
 

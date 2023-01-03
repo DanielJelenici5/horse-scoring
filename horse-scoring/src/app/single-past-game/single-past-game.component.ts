@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DatabaseService } from '../database.service';
+import { DatabaseObject } from '../model/database-object.model';
+import { HorseGame } from '../model/horse-game.model';
+
+interface DisplayObject{
+  stat: string;
+}
 
 @Component({
   selector: 'app-single-past-game',
@@ -7,9 +15,62 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SinglePastGameComponent implements OnInit {
 
-  constructor() { }
+  dbObject: DatabaseObject;
+
+  dateObject: string;
+
+  numPlayers: number;
+  startingCardNum: number;
+
+  gameId: string = this.ActivedRoute.snapshot.paramMap.get("gameId");
+
+  tableData: DisplayObject[];
+  tableColumns: string[];
+
+  constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
+ 
+    this.databaseService.getSingleDataObject(this.gameId).then((response)=> {
+      this.dbObject=response["data"]
+      this.dateObject = (new Date(this.dbObject.dateTime)).toDateString()
+     }) 
+     this.populateData();
+  }
+
+  async populateData(){
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    await sleep(1500)
+    
+    this.tableColumns = new Array();
+    this.tableData = new Array();
+    this.tableColumns.push("stat")
+   // this.tableColumns = this.tableColumns.concat(this.dbObject.players);
+    for(let i =0; i < this.dbObject.players.length; i++){
+
+      this.tableColumns.push(Object.entries(this.dbObject.scores)[i][0])
+    }
+
+    const obj: DisplayObject= {
+      stat: "Score"
+    }
+    for(let i =1; i < this.tableColumns.length; i++){
+      var score = <string>this.dbObject.scores[this.tableColumns[i]][0]
+      obj[this.tableColumns[i]] = score;
+    }
+    this.tableData.push(obj)
+
+
+    const obj2: DisplayObject= {
+      stat: "Horses"
+    }
+    for(let i =1; i < this.tableColumns.length; i++){
+      var score = <string>this.dbObject.scores[this.tableColumns[i]][1]
+      obj2[this.tableColumns[i]] = score;
+    }
+    this.tableData.push(obj2)
+    console.log(this.dbObject)
+    
   }
 
 }
