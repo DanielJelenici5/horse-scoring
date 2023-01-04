@@ -23,10 +23,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SaveFinalScoreComponent } from './save-final-score/save-final-score.component';
 import { PlayerStatsComponent } from './player-stats/player-stats.component';
 
-
 import { NotifierModule } from 'angular-notifier';
 import { PastGamesComponent } from './past-games/past-games.component';
 import { SinglePastGameComponent } from './single-past-game/single-past-game.component';
+
+
 
 @NgModule({
   declarations: [

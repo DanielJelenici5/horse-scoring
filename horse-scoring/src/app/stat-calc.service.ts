@@ -24,7 +24,6 @@ export class StatCalcService {
      
    }
   async createStats(){
-    console.log("called createStats")
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500)
     
@@ -46,8 +45,10 @@ export class StatCalcService {
         this.giveLosePointsStat(dbObject.scores, playerStats, player);
         this.giveLoseHorseStat(dbObject.scores, playerStats, player);
   
-        this.updatePlacementStats(playerStats,scorePlacments)
+        
       }
+      this.updatePlacementStats(scorePlacments, dbObject.scores )
+      
 
     }
   }
@@ -57,12 +58,19 @@ export class StatCalcService {
     return keysSorted
   }
 
-  updatePlacementStats(playerStats,  scorePlacement){
-    for(let i=0; i <  scorePlacement.length; i++){
-      if(playerStats.name === scorePlacement[i]){
-        var placementFinish = playerStats.placementFinished.get(i+1);
-        playerStats.placementFinished.set(i+1,placementFinish + 1)
+  updatePlacementStats(scorePlacement, scores){
+    var currentPlacement: number = 1;
+    var currentScore: number = scores[scorePlacement[0]][0];
+    console.log("test")
+    
+    for(let i=0; i < scorePlacement.length; i++){
+
+      if(scores[scorePlacement[i]][0] < currentScore){
+        currentScore = scores[scorePlacement[i]][0];
+        currentPlacement++;
       }
+      var placementFinish = PlayerStats.getPlayerStats(scorePlacement[i]).placementFinished.get(currentPlacement);
+      PlayerStats.getPlayerStats(scorePlacement[i]).placementFinished.set(currentPlacement, placementFinish + 1);
     }
   }
 
