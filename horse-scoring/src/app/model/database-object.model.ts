@@ -3,7 +3,7 @@ import { HorseGame } from "./horse-game.model";
 export class DatabaseObject {
 
     public id: string;
-    public dateTime: Date;
+    public dateTime: Date | string;
     public players: string[];
     public numRounds: number;
 

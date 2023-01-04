@@ -41,6 +41,17 @@ export class PastGamesComponent implements OnInit {
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500)
     this.sortedData = new Array();
+
+
+    this.allDBObjects.sort(function(a,b){
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(b.dateTime).valueOf() - new Date(a.dateTime).valueOf();
+    });
+    
+
+
+    
     for(let i=0; i <this.allDBObjects.length; i++){
       var game: DatabaseObject = this.allDBObjects[i]
       const winners : string[] = new Array();
