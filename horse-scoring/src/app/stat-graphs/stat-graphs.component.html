@@ -1,0 +1,21 @@
+<div style="text-align: center; ">
+    <p style="text-align: center; font-size: 20px"><i>Select a stat from the dropdown to compare</i></p>
+    <select class="form-select" aria-label="Default select example" (change)="statChange($event.target)">
+        <option value="gamesPlayed">Games Played</option>
+        <option value="gamesWon">Games Won</option>
+        <option value="winPercentage">Win %</option>
+        <option value="totalPoints">Total Points</option>
+        <option value="totalHorses">Total Horses</option>
+        <option value="avgPointsPerGame">Average Points Per Game</option>
+        <option value="avgHorsesPerGame">Average Horses Per Game</option>
+        <option value="averagePointsPerRound">Average Points Per Round</option>
+        <option value="averageHorsesPerRound">Average Horses Per Round</option>
+        <option value="totalLossesPoints">Total Losses By Points</option>
+        <option value="totalLossesHorses">Total Losses By Horses</option>
+      </select>
+</div>
+
+
+<div style="text-align: center; ">
+    <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getChartInstance($event)"></canvasjs-chart>    
+</div>      

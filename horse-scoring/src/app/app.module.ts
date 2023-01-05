@@ -26,7 +26,12 @@ import { PlayerStatsComponent } from './player-stats/player-stats.component';
 import { NotifierModule } from 'angular-notifier';
 import { PastGamesComponent } from './past-games/past-games.component';
 import { SinglePastGameComponent } from './single-past-game/single-past-game.component';
+import { StatGraphsComponent } from './stat-graphs/stat-graphs.component';
 
+import { CommonModule } from '@angular/common';
+
+import * as CanvasJSAngularChart from '../assets/canvasjs.angular.component';
+var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 
 @NgModule({
@@ -39,7 +44,9 @@ import { SinglePastGameComponent } from './single-past-game/single-past-game.com
     SaveFinalScoreComponent,
     PlayerStatsComponent,
     PastGamesComponent,
-    SinglePastGameComponent
+    SinglePastGameComponent,
+    StatGraphsComponent,
+    CanvasJSChart
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,8 @@ import { SinglePastGameComponent } from './single-past-game/single-past-game.com
     HttpClientModule,
     MatSortModule,
     BrowserAnimationsModule,
-    NotifierModule   
+    NotifierModule,
+    CommonModule   
   ],
   providers: [],
   bootstrap: [AppComponent]
