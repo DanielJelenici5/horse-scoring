@@ -61,7 +61,7 @@ export class StatCalcService {
   updatePlacementStats(scorePlacement, scores){
     var currentPlacement: number = 1;
     var currentScore: number = scores[scorePlacement[0]][0];
-    console.log("test")
+
     
     for(let i=0; i < scorePlacement.length; i++){
 
@@ -124,6 +124,8 @@ export class StatCalcService {
       playerStat.gamesLostOnHorses++;
     }
   }
+
+  
 
 
 }
