@@ -34,14 +34,11 @@ export class SinglePastGameComponent implements OnInit {
       for(let i = 0; i < response.length; i++){
         if(response[i]["data"].id == this.gameId){
             this.dbObject = response[i]["data"];
+            this.dateObject = (new Date(this.dbObject.dateTime)).toDateString()
             break;
         }
       }
      }) 
-    /*this.databaseService.getSingleDataObject(this.gameId).then((response)=> {
-      this.dbObject=response["data"]
-      this.dateObject = (new Date(this.dbObject.dateTime)).toDateString()
-     }) */
      this.populateData();
   }
 
