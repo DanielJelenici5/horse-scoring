@@ -30,11 +30,18 @@ export class SinglePastGameComponent implements OnInit {
   constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
- 
-    this.databaseService.getSingleDataObject(this.gameId).then((response)=> {
+    this.databaseService.getAllData().then((response)=> {
+      for(let i = 0; i < response.length; i++){
+        if(response[i]["data"].id == this.gameId){
+            this.dbObject = response[i]["data"];
+            break;
+        }
+      }
+     }) 
+    /*this.databaseService.getSingleDataObject(this.gameId).then((response)=> {
       this.dbObject=response["data"]
       this.dateObject = (new Date(this.dbObject.dateTime)).toDateString()
-     }) 
+     }) */
      this.populateData();
   }
 
