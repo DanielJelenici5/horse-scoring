@@ -37,4 +37,8 @@ export class HomePageComponent implements OnInit {
   goToPastGames(){
     this.router.navigate(['/past-games'])
   }
+
+  goToMonthlyHighlights(){
+    this.router.navigate(['/monthly-highlights'])
+  }
 }

@@ -31,6 +31,7 @@ import { StatGraphsComponent } from './stat-graphs/stat-graphs.component';
 import { CommonModule } from '@angular/common';
 
 import * as CanvasJSAngularChart from '../assets/canvasjs.angular.component';
+import { MonthlyHighlightsComponent } from './monthly-highlights/monthly-highlights.component';
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 
@@ -46,7 +47,8 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     PastGamesComponent,
     SinglePastGameComponent,
     StatGraphsComponent,
-    CanvasJSChart
+    CanvasJSChart,
+    MonthlyHighlightsComponent
   ],
   imports: [
     BrowserModule,
