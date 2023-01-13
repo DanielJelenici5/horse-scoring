@@ -5,6 +5,8 @@ import { PlayerStats } from '../model/player-stats.model';
 import {MatSort, Sort} from '@angular/material/sort';
 import { StatCalcService } from '../stat-calc.service';
 import { Router } from '@angular/router';
+import { DatabaseObject } from '../model/database-object.model';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -15,14 +17,19 @@ export class LeaderboardComponent implements OnInit {
 
   allGames: HorseGame[];
 
-  constructor(private statCalcService: StatCalcService, private router: Router) {
+  constructor(private statCalcService: StatCalcService, private router: Router, private databaseService: DatabaseService) {
     this.allGames = HorseGame.allGames;
    }
 
   ngOnInit(): void {
-    if( PlayerStats.allPlayerStats.length == 0){
-      this.statCalcService.createStats();
-    
+    const allDBObjects: DatabaseObject[] = new Array();
+    if(PlayerStats.allPlayerStats.length == 0){
+      this.databaseService.getAllData().then((response)=> {
+        for(let i = 0; i < response.length; i++){
+          allDBObjects.push(response[i]["data"])
+        }
+       }) 
+      this.createPlayerStats(allDBObjects);
     }
     this.updateTable()
     
@@ -32,10 +39,18 @@ export class LeaderboardComponent implements OnInit {
   displayedColumns: string[] = ["Player", "Games Played", "Games Won", "Points Per 12", "Horses Per 12", "Additional Stats"];
 
   sortedData: PlayerStats[];
+
+  async createPlayerStats(allDBObjects){
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    await sleep(1500)
+    this.statCalcService.createStats(allDBObjects, true);
+    
+  }
   
   async updateTable(){
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500)
+    console.log(PlayerStats.allPlayerStats)
     this.sortedData = PlayerStats.allPlayerStats;
   }
 

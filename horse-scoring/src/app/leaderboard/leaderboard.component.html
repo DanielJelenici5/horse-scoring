@@ -1,5 +1,5 @@
 <h1 style="text-align: center;">Leaderboard</h1>
-<p style="text-align: center;">Click on a player to see additional statistics</p>
+<p style="text-align: center;">Click on a column to order players</p>
 <table mat-table [dataSource]="sortedData" matSort (matSortChange)="SortChange($event)" style="margin: 0px auto;">
     <ng-container matColumnDef="Player">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Player </th>

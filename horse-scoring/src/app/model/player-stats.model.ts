@@ -12,9 +12,11 @@ export class PlayerStats {
     public gamesLostOnHorses: number;
     public roundsPlayed: number;
 
-    constructor(name){
+    constructor(name, addToStaticList){
         this.name = name.toLowerCase();
-        PlayerStats.allPlayerStats.push(this);
+        if(addToStaticList){
+            PlayerStats.allPlayerStats.push(this);
+        }
         this.gamesPlayed = 0;
         this.totalHorses =0;
         this.totalPoints = 0;

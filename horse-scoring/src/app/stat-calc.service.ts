@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DatabaseService } from '../app/database.service';
 import { DatabaseObject } from './model/database-object.model';
 import { PlayerStats } from './model/player-stats.model';
 
@@ -8,35 +7,22 @@ import { PlayerStats } from './model/player-stats.model';
 })
 export class StatCalcService {
 
-  allDBObjects: DatabaseObject[];
+  playerStatArray: PlayerStats[] = new Array();
+  constructor() {}
 
-  constructor(private databaseService: DatabaseService) {
-    this.allDBObjects = new Array();
-    this.populateInitialObjects()
-   }
-
-   populateInitialObjects(){
-    this.databaseService.getAllData().then((response)=> {
-      for(let i = 0; i < response.length; i++){
-        this.allDBObjects.push(response[i]["data"])
-      }
-     }) 
-     
-   }
-  async createStats(){
-    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-    await sleep(1500)
+  createStats(allDBObjects, addToStaticList){
     
-    for(let i =0; i < this.allDBObjects.length; i++){
-      let dbObject: DatabaseObject = this.allDBObjects[i]
+    this.playerStatArray = new Array();
+    for(let i =0; i < allDBObjects.length; i++){
+      let dbObject: DatabaseObject = allDBObjects[i]
       var scorePlacments = this.sortPlacement(dbObject.scores)
       for(let j = 0 ; j < dbObject.players.length; j++){
-        if(!PlayerStats.playerStatsExist(dbObject.players[j])){
-          new PlayerStats(dbObject.players[j])
+        if(!PlayerStats.playerStatsExist(dbObject.players[j]) && !this.playerStatsExist(dbObject.players[j]) ){
+          this.playerStatArray.push(new PlayerStats(dbObject.players[j], addToStaticList))
         }
       }
       for(var player in dbObject.scores){
-        var playerStats : PlayerStats = PlayerStats.getPlayerStats(player)
+        var playerStats : PlayerStats = this.playerStatArray.filter(obj => obj.name.toLowerCase() === player.toLowerCase())[0] // PlayerStats.getPlayerStats(player)
         playerStats.gamesPlayed++;
         playerStats.roundsPlayed += dbObject.numRounds;
         playerStats.totalPoints += dbObject.scores[player][0]
@@ -44,13 +30,11 @@ export class StatCalcService {
         this.giveWinStat(dbObject.scores, playerStats, player);
         this.giveLosePointsStat(dbObject.scores, playerStats, player);
         this.giveLoseHorseStat(dbObject.scores, playerStats, player);
-  
-        
       }
-      this.updatePlacementStats(scorePlacments, dbObject.scores )
-      
-
+      this.updatePlacementStats(scorePlacments, dbObject.scores)
     }
+    return this.playerStatArray;
+
   }
 
   sortPlacement(scores){
@@ -69,8 +53,10 @@ export class StatCalcService {
         currentScore = scores[scorePlacement[i]][0];
         currentPlacement++;
       }
-      var placementFinish = PlayerStats.getPlayerStats(scorePlacement[i]).placementFinished.get(currentPlacement);
-      PlayerStats.getPlayerStats(scorePlacement[i]).placementFinished.set(currentPlacement, placementFinish + 1);
+     
+     // var placementFinish = PlayerStats.getPlayerStats(scorePlacement[i]).placementFinished.get(currentPlacement);
+      var placementFinish =  this.playerStatArray.filter(obj => obj.name.toLowerCase() === scorePlacement[i])[0].placementFinished.get(currentPlacement);
+      this.playerStatArray.filter(obj => obj.name.toLowerCase() === scorePlacement[i])[0].placementFinished.set(currentPlacement, placementFinish + 1);
     }
   }
 
@@ -123,6 +109,15 @@ export class StatCalcService {
     if(parseInt(scores[player][1]) === maxHorse){
       playerStat.gamesLostOnHorses++;
     }
+  }
+
+  playerStatsExist(name: string): boolean{
+    for(let i =0; i < this.playerStatArray.length; i++){
+        if(this.playerStatArray[i].name.toLowerCase() === name.toLowerCase()){
+            return true;
+        }
+    }
+    return false;
   }
 
   

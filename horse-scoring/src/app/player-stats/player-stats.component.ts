@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PlayerStats } from '../model/player-stats.model';
 import { ActivatedRoute } from '@angular/router';
 import { StatCalcService } from '../stat-calc.service';
+import { DatabaseService } from '../database.service';
+import { DatabaseObject } from '../model/database-object.model';
 
 interface PlacementObject{
   1: number;
@@ -35,19 +37,32 @@ export class PlayerStatsComponent implements OnInit {
   placemenetColumns: string[] = ["1st","2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
 
   
-  constructor(private ActivedRoute: ActivatedRoute, private statCalcService: StatCalcService) { }
+  constructor(private ActivedRoute: ActivatedRoute, private statCalcService: StatCalcService, private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
+    const allDBObjects: DatabaseObject[] = new Array();
     if(PlayerStats.allPlayerStats.length == 0){
-      this.statCalcService.createStats();
+      this.databaseService.getAllData().then((response)=> {
+        for(let i = 0; i < response.length; i++){
+          allDBObjects.push(response[i]["data"])
+        }
+       }) 
+      this.createPlayerStats(allDBObjects);
     }
+
   
-   this.getPlaterStats();
+   this.getPlayerStats();
    this.fillPlacementStats();
 
   }
 
-  async getPlaterStats(){
+  async createPlayerStats(allDBObjects){
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    await sleep(1500)
+    this.statCalcService.createStats(allDBObjects, true);
+  }
+
+  async getPlayerStats(){
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500)
     this.playerStat =  PlayerStats.getPlayerStats(this.ActivedRoute.snapshot.paramMap.get("name"));
