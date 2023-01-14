@@ -7,10 +7,13 @@ export class PlayerStats {
     public totalHorses: number;
     public totalPoints: number;
     public placementFinished: Map<number, number>
+    public averagePlacement: number;
     public gamesWon: number;
     public gamesLostOnPoints: number;
     public gamesLostOnHorses: number;
     public roundsPlayed: number;
+
+    public monthScore: number = 0;
 
     constructor(name, addToStaticList){
         this.name = name.toLowerCase();
@@ -24,6 +27,7 @@ export class PlayerStats {
         this.gamesLostOnHorses = 0;
         this.gamesLostOnPoints = 0;
         this.roundsPlayed = 0;
+        this.averagePlacement = 0;
 
         this.placementFinished = new Map()
 
