@@ -3,6 +3,7 @@ import { DatabaseService } from '../database.service';
 import { DatabaseObject } from '../model/database-object.model';
 import { StatCalcService } from '../stat-calc.service';
 import { PlayerStats } from '../model/player-stats.model';
+import { Router } from '@angular/router';
 
 interface MonthlyHighlightObject{
   month:string,
@@ -21,12 +22,13 @@ interface MonthlyHighlightObject{
 export class MonthlyHighlightsComponent implements OnInit {
 
   ScoringWeights = {
-    wins: 4,
-    placement: 3,
-    pointsPerRound: 2,
-    gamesLostOnHorses: -1.5,
-    gamesLostOnPoints: -1.5
+    winPercentage: 20,
+    placement: 2,
+    pointsPerRound: 3,
+    gamesLostOnHorses: -1,
+    gamesLostOnPoints: -1
   }
+
   
   allDBObjects: DatabaseObject[] = new Array();
 
@@ -35,7 +37,7 @@ export class MonthlyHighlightsComponent implements OnInit {
 
   currentDisplayedMonths: string[] = ["January 2023"]
 
-  constructor(private databaseService: DatabaseService, private statcalcService: StatCalcService) { }
+  constructor(private databaseService: DatabaseService, private statcalcService: StatCalcService, private router: Router) { }
 
   ngOnInit(): void {
     this.databaseService.getAllData().then((response)=> {
@@ -48,6 +50,7 @@ export class MonthlyHighlightsComponent implements OnInit {
 
   seeStats(month){
     const monthFormatted = month.split(' ').join('-')
+    this.router.navigate(["/monthly-highlights", monthFormatted])
 
   }
 
@@ -65,7 +68,7 @@ export class MonthlyHighlightsComponent implements OnInit {
       const wpotm = scoreArray[scoreArray.length - 1].name;
       const mipotm = "n/a"
       if(monthlyHighlightObjectMonth != "January 2023"){
-        //do most imporved potm here
+        //do most improved potm here
       }
       const  monthlyHighlightObject = {
         month: monthlyHighlightObjectMonth,
@@ -122,11 +125,27 @@ export class MonthlyHighlightsComponent implements OnInit {
 
   calculateScore(playerStats: PlayerStats){
     var score: number = 0;
-    score += playerStats.gamesWon * this.ScoringWeights.wins;
-    score += playerStats.averagePlacement * this.ScoringWeights.placement;
-    score += (playerStats.totalPoints / playerStats.roundsPlayed) * this.ScoringWeights.pointsPerRound;
-    score += playerStats.gamesLostOnHorses * this.ScoringWeights.gamesLostOnHorses;
-    score += playerStats.gamesLostOnPoints * this.ScoringWeights.gamesLostOnPoints;
+
+    console.log("name")
+    console.log(playerStats.name)
+
+    const winPercentagePoints = (playerStats.gamesWon / playerStats.gamesPlayed) * this.ScoringWeights.winPercentage
+    score += winPercentagePoints;
+
+    const placementPoints = (8 - playerStats.averagePlacement) * this.ScoringWeights.placement
+    score += placementPoints;
+
+    const pointsPerRound = (playerStats.totalPoints / playerStats.roundsPlayed) * this.ScoringWeights.pointsPerRound;
+    score += pointsPerRound
+
+    const lostOnHorses = playerStats.gamesLostOnHorses * this.ScoringWeights.gamesLostOnHorses
+    score += lostOnHorses;
+
+    const lostOnPoints = playerStats.gamesLostOnPoints * this.ScoringWeights.gamesLostOnPoints;
+    score += lostOnPoints;
+
     playerStats.monthScore = parseFloat(score.toFixed(2));
+    console.log("total score")
+    console.log(playerStats.monthScore)
   }
 }

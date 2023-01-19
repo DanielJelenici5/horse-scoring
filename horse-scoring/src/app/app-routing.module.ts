@@ -9,6 +9,7 @@ import { PlayerStatsComponent } from './player-stats/player-stats.component';
 import { PastGamesComponent } from './past-games/past-games.component';
 import { SinglePastGameComponent } from './single-past-game/single-past-game.component';
 import { MonthlyHighlightsComponent } from './monthly-highlights/monthly-highlights.component';
+import { SingleMonthlyHighlightComponent } from './single-monthly-highlight/single-monthly-highlight.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'save-final-score/:id', component: SaveFinalScoreComponent},
   {path: 'player-stats/:name', component: PlayerStatsComponent},
   {path: 'monthly-highlights', component: MonthlyHighlightsComponent},
+  {path: 'monthly-highlights/:month', component: SingleMonthlyHighlightComponent}, 
   {path: 'past-games', component: PastGamesComponent},
   {path: 'past-game/:gameId', component: SinglePastGameComponent},
   {path: 'new-game/:id', component: ScoringBoardComponent}
