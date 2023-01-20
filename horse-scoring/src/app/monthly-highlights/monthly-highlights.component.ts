@@ -87,11 +87,13 @@ export class MonthlyHighlightsComponent implements OnInit {
     const totalGamesPlayed = monthlyPlayerStats.reduce((total, currentValue: PlayerStats) => total + currentValue.gamesPlayed, 0)
     const floorAverageGamesPlayed = Math.floor(totalGamesPlayed/monthlyPlayerStats.length);
   
-    const filteredByGamesPlayed = monthlyPlayerStats.filter(obj => obj.gamesPlayed >= floorAverageGamesPlayed)
-    for(let i=0; i < filteredByGamesPlayed.length; i++){
-      this.calculateAveragePlacementPre(filteredByGamesPlayed[i])
-      this.calculateScore(filteredByGamesPlayed[i])
+ 
+    for(let i=0; i < monthlyPlayerStats.length; i++){
+      this.calculateAveragePlacementPre(monthlyPlayerStats[i])
+      this.calculateScore(monthlyPlayerStats[i])
     }
+    const filteredByGamesPlayed = monthlyPlayerStats.filter(obj => obj.gamesPlayed >= floorAverageGamesPlayed)
+    filteredByGamesPlayed.map(obj => obj.qualified = true)
     filteredByGamesPlayed.sort(function(a,b){return b.score-a.score})
     return filteredByGamesPlayed
   }

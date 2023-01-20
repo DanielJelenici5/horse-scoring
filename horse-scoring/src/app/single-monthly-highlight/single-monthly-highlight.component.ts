@@ -18,11 +18,16 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
   allDBObjects: DatabaseObject[] = new Array();
   scores: MonthlyPlayerStats[];
+  scoresNotQualified: MonthlyPlayerStats[];
 
   formattedMonth: string;
 
   displayedColumns: string[] = ["Player", "Calculated Score"];
   sortedData: RankingTableObj[];
+
+  totalGamesPlayed: number = 0;
+  totalPlayers: number = 0;
+  flooredAvg: number = 0;
 
   constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService) {
   }
@@ -30,6 +35,11 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   ngOnInit(): void {
     this.formattedMonth = this.ActivedRoute.snapshot.paramMap.get("month").split('-').join(' ')
     this.scores = MonthlyPlayerStats.getAllByMonth(this.formattedMonth);
+    this.totalGamesPlayed = this.scores.reduce((total, currentValue: MonthlyPlayerStats) => total + currentValue.gamesPlayed, 0)
+    this.totalPlayers = this.scores.length;
+    this.flooredAvg = Math.floor(this.totalGamesPlayed/this.totalPlayers)
+    this.scoresNotQualified = this.scores.filter(obj => obj.qualified == false);
+    this.scores = this.scores.filter(obj => obj.qualified)
     this.scores.sort(function(a,b){return b.score-a.score})
 
     this.populateRankingsTable();

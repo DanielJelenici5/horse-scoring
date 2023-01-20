@@ -26,3 +26,31 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<br>
+<div style="text-align: center;">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#NoQualify" >Who didn't qualify for POTM?</button>
+</div>
+
+
+
+
+<div id="NoQualify" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="text-align: center;" class="modal-title">Calculating POTM</h1>
+            </div>
+            <div class="modal-body">
+             <p>The average amount of games played for this month was: {{(totalGamesPlayed/totalPlayers)}}, flooring that is: {{flooredAvg}} </p>
+            
+             <ul>
+                <li *ngFor = "let obj of scoresNotQualified"> 
+                    <span>{{obj.name}} -> Games Played: {{obj.gamesPlayed}} -> Calulcated Score: {{obj.score}}</span>
+                </li>
+             </ul>
+             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
