@@ -4,6 +4,7 @@ import { DatabaseObject } from '../model/database-object.model';
 import { StatCalcService } from '../stat-calc.service';
 import { PlayerStats } from '../model/player-stats.model';
 import { Router } from '@angular/router';
+import { MonthlyPlayerStats } from '../model/monthly-player-stats.model';
 
 interface MonthlyHighlightObject{
   month:string,
@@ -66,7 +67,7 @@ export class MonthlyHighlightsComponent implements OnInit {
       const scoreArray = this.calculatePOTM(filteredMonth);
       const potm = scoreArray[0].name
       const wpotm = scoreArray[scoreArray.length - 1].name;
-      const mipotm = "n/a"
+      var mipotm = "n/a"
       if(monthlyHighlightObjectMonth != "January 2023"){
         //do most improved potm here
       }
@@ -81,7 +82,7 @@ export class MonthlyHighlightsComponent implements OnInit {
   }
 
   calculatePOTM(array){
-    const monthlyPlayerStats: PlayerStats[] = this.statcalcService.createStats(array, false)
+    const monthlyPlayerStats: MonthlyPlayerStats[] = this.statcalcService.createStats(array, false, true)
 
     const totalGamesPlayed = monthlyPlayerStats.reduce((total, currentValue: PlayerStats) => total + currentValue.gamesPlayed, 0)
     const floorAverageGamesPlayed = Math.floor(totalGamesPlayed/monthlyPlayerStats.length);
@@ -91,10 +92,10 @@ export class MonthlyHighlightsComponent implements OnInit {
       this.calculateAveragePlacementPre(filteredByGamesPlayed[i])
       this.calculateScore(filteredByGamesPlayed[i])
     }
-    filteredByGamesPlayed.sort(function(a,b){return b.monthScore-a.monthScore})
+    filteredByGamesPlayed.sort(function(a,b){return b.score-a.score})
     return filteredByGamesPlayed
   }
-  calculateAveragePlacementPre(playerStats: PlayerStats){
+  calculateAveragePlacementPre(playerStats: MonthlyPlayerStats){
     const placement = { 
       1: 0,
       2: 0,
@@ -123,11 +124,8 @@ export class MonthlyHighlightsComponent implements OnInit {
     return parseFloat((sum / total).toFixed(2))
   }
 
-  calculateScore(playerStats: PlayerStats){
+  calculateScore(playerStats: MonthlyPlayerStats){
     var score: number = 0;
-
-    console.log("name")
-    console.log(playerStats.name)
 
     const winPercentagePoints = (playerStats.gamesWon / playerStats.gamesPlayed) * this.ScoringWeights.winPercentage
     score += winPercentagePoints;
@@ -144,8 +142,7 @@ export class MonthlyHighlightsComponent implements OnInit {
     const lostOnPoints = playerStats.gamesLostOnPoints * this.ScoringWeights.gamesLostOnPoints;
     score += lostOnPoints;
 
-    playerStats.monthScore = parseFloat(score.toFixed(2));
-    console.log("total score")
-    console.log(playerStats.monthScore)
+    var monthlyPlayerStatObj: MonthlyPlayerStats = <MonthlyPlayerStats>playerStats;
+    monthlyPlayerStatObj.registerMonthlyPlayerStat("January 2023",  parseFloat(score.toFixed(2)))
   }
 }

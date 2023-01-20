@@ -13,8 +13,6 @@ export class PlayerStats {
     public gamesLostOnHorses: number;
     public roundsPlayed: number;
 
-    public monthScore: number = 0;
-
     constructor(name, addToStaticList){
         this.name = name.toLowerCase();
         if(addToStaticList){

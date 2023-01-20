@@ -36,6 +36,9 @@ import { MonthlyHighlightsComponent } from './monthly-highlights/monthly-highlig
 import { SingleMonthlyHighlightComponent } from './single-monthly-highlight/single-monthly-highlight.component';
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
+import { NgxStarsModule } from 'ngx-stars';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [
@@ -66,6 +69,8 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     BrowserAnimationsModule,
     NotifierModule,
     CommonModule, 
+    NgxStarsModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

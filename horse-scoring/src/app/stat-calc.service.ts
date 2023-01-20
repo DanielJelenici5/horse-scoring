@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { DatabaseObject } from './model/database-object.model';
 import { PlayerStats } from './model/player-stats.model';
+import { MonthlyPlayerStats } from './model/monthly-player-stats.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatCalcService {
 
-  playerStatArray: PlayerStats[] = new Array();
+  playerStatArray = new Array();
   constructor() {}
 
-  createStats(allDBObjects, addToStaticList){
+  createStats(allDBObjects, addToStaticList, monthlyStats){
     
     this.playerStatArray = new Array();
     for(let i =0; i < allDBObjects.length; i++){
@@ -18,7 +19,13 @@ export class StatCalcService {
       var scorePlacments = this.sortPlacement(dbObject.scores)
       for(let j = 0 ; j < dbObject.players.length; j++){
         if(!PlayerStats.playerStatsExist(dbObject.players[j]) && !this.playerStatsExist(dbObject.players[j]) ){
-          this.playerStatArray.push(new PlayerStats(dbObject.players[j], addToStaticList))
+          if(monthlyStats){
+            this.playerStatArray.push(new MonthlyPlayerStats(dbObject.players[j], addToStaticList))
+          }
+          else{
+            this.playerStatArray.push(new PlayerStats(dbObject.players[j], addToStaticList))
+          }
+          
         }
       }
       for(var player in dbObject.scores){

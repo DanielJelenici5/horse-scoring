@@ -1,1 +1,28 @@
-<p>single-monthly-highlight works!</p>
+<h1 style="text-align: center;">Monthly Highlights for {{formattedMonth}}</h1>
+<br>
+
+<h2 style="text-align: center;">3 Stars Of The Month</h2>
+<table mat-table [dataSource]="sortedData" style="margin: 0px auto;">
+    <ng-container matColumnDef="Player">
+        <th mat-header-cell *matHeaderCellDef> Player </th>
+        <td mat-cell *matCellDef="let element let i = index">
+            <div style="display: flex; align-items: center; justify-content: center ">
+            <ngx-stars *ngIf = "i == 0" [readonly]="true" [maxStars]="1" [initialStars]="1"></ngx-stars>
+            <ngx-stars *ngIf = "i == 1" [readonly]="true" [maxStars]="2" [initialStars]="2"></ngx-stars>
+            <ngx-stars *ngIf = "i == 2" [readonly]="true" [maxStars]="3" [initialStars]="3"></ngx-stars>
+            <span>{{element.name}}</span>
+            <ngx-stars *ngIf = "i == 0" [readonly]="true" [maxStars]="1" [initialStars]="1"></ngx-stars>
+            <ngx-stars *ngIf = "i == 1" [readonly]="true" [maxStars]="2" [initialStars]="2"></ngx-stars>
+            <ngx-stars *ngIf = "i == 2" [readonly]="true" [maxStars]="3" [initialStars]="3"></ngx-stars>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Calculated Score">
+        <th mat-header-cell *matHeaderCellDef> Calculated Score </th>
+        <td mat-cell *matCellDef="let element" matTooltip="Info about the action"> {{element.score}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

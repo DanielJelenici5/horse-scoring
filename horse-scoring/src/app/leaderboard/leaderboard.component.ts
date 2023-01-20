@@ -43,7 +43,7 @@ export class LeaderboardComponent implements OnInit {
   async createPlayerStats(allDBObjects){
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500)
-    this.statCalcService.createStats(allDBObjects, true);
+    this.statCalcService.createStats(allDBObjects, true, false);
     
   }
   
