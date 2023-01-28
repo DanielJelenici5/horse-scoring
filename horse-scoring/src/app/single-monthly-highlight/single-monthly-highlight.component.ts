@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthlyPlayerStats } from '../model/monthly-player-stats.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseObject } from '../model/database-object.model';
 import { DatabaseService } from '../database.service';
 
 interface RankingTableObj{
   name:string,
   score: number,
+}
+
+interface StatMonthTableObj{
+  stat: string,
+  player: string,
+  score: string,
+  gameId: string,
 }
 
 @Component({
@@ -25,6 +32,9 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   displayedColumns: string[] = ["Player", "Calculated Score"];
   sortedData: RankingTableObj[];
 
+  displayedColumns2: string[] = ["Stat", "Player", "Score", "Game"];
+  sortedData2: StatMonthTableObj[];
+
   totalGamesPlayed: number = 0;
   totalPlayers: number = 0;
   flooredAvg: number = 0;
@@ -35,7 +45,11 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     horses: 0
   }
 
-  constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService) {
+  goToGame(gameId){
+    this.router.navigate(["/past-game", gameId])
+  }
+
+  constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -63,6 +77,8 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     await sleep(1500)
 
+    this.sortedData2 = new Array();
+
     const filteredMonth = this.allDBObjects.filter(obj =>(new Date(obj.dateTime)).toLocaleString('default', { month: 'long' }) + " " + (new Date(obj.dateTime)).getFullYear() === this.formattedMonth);
 
     this.findMostHorsesInGame(filteredMonth);
@@ -83,14 +99,36 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   }
 
   findMostHorsesInGame(filteredMonth){
-    var mostHorses = 0;
+    var mostHorsesOverall = 0;
+    var mostHorsesPlayerOverall = "";
+    var mostHorsesGameIDOverall = "";
     for(let i =0 ; i < filteredMonth.length; i++){
       var game: DatabaseObject = filteredMonth[i];
+      var mostHorsesGame = 0;
+      var mostHorsesPlayerGame = "";
+      var mostHorsesGameId = "";
       for(var key in game.scores){
         var player = key;
         var horses = game.scores[player][1]
+        if(horses > mostHorsesGame){
+          mostHorsesGame = horses;
+          mostHorsesPlayerGame = player;
+          mostHorsesGameId = game.id;
+        }
+      }
+      if(mostHorsesGame > mostHorsesOverall){
+          mostHorsesOverall = mostHorsesGame;
+          mostHorsesPlayerOverall = mostHorsesPlayerGame;
+          mostHorsesGameIDOverall = mostHorsesGameId;
       }
     }
+    const statObject: StatMonthTableObj = {
+      stat: "Most horses in a game",
+      player: mostHorsesPlayerOverall,
+      score: mostHorsesOverall.toString(),
+      gameId: mostHorsesGameIDOverall,
+    }
+    this.sortedData2.push(statObject);
     
   }
 
