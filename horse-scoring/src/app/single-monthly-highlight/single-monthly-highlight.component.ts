@@ -29,6 +29,12 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   totalPlayers: number = 0;
   flooredAvg: number = 0;
 
+  mostHorsesinGame = {
+    player: "n/a",
+    game: "n/a",
+    horses: 0
+  }
+
   constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService) {
   }
 
@@ -59,6 +65,8 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
     const filteredMonth = this.allDBObjects.filter(obj =>(new Date(obj.dateTime)).toLocaleString('default', { month: 'long' }) + " " + (new Date(obj.dateTime)).getFullYear() === this.formattedMonth);
 
+    this.findMostHorsesInGame(filteredMonth);
+    this.findMostCleanSheets(filteredMonth);
 
   }
 
@@ -74,6 +82,21 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
   }
 
-  
+  findMostHorsesInGame(filteredMonth){
+    var mostHorses = 0;
+    for(let i =0 ; i < filteredMonth.length; i++){
+      var game: DatabaseObject = filteredMonth[i];
+      for(var key in game.scores){
+        var player = key;
+        var horses = game.scores[player][1]
+      }
+    }
+    
+  }
+
+  findMostCleanSheets(filteredMonth){
+
+  }
 
 }
+

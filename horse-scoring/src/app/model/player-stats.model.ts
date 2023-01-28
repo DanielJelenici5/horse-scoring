@@ -14,7 +14,7 @@ export class PlayerStats {
     public roundsPlayed: number;
 
     constructor(name, addToStaticList){
-        this.name = name.toLowerCase();
+        this.name = name.toLowerCase()//.split(' ').join('');
         if(addToStaticList){
             PlayerStats.allPlayerStats.push(this);
         }

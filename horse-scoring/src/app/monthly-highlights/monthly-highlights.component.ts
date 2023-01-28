@@ -87,6 +87,7 @@ export class MonthlyHighlightsComponent implements OnInit {
     const totalGamesPlayed = monthlyPlayerStats.reduce((total, currentValue: PlayerStats) => total + currentValue.gamesPlayed, 0)
     const floorAverageGamesPlayed = Math.floor(totalGamesPlayed/monthlyPlayerStats.length);
   
+    MonthlyPlayerStats.allMonthlyPlayerStats = [];
  
     for(let i=0; i < monthlyPlayerStats.length; i++){
       this.calculateAveragePlacementPre(monthlyPlayerStats[i])
@@ -145,6 +146,6 @@ export class MonthlyHighlightsComponent implements OnInit {
     score += lostOnPoints;
 
     var monthlyPlayerStatObj: MonthlyPlayerStats = <MonthlyPlayerStats>playerStats;
-    monthlyPlayerStatObj.registerMonthlyPlayerStat("January 2023",  parseFloat(score.toFixed(2)))
+    monthlyPlayerStatObj.registerMonthlyPlayerStat("January 2023", parseFloat(score.toFixed(2)))
   }
 }
