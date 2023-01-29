@@ -3,6 +3,7 @@ import { MonthlyPlayerStats } from '../model/monthly-player-stats.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseObject } from '../model/database-object.model';
 import { DatabaseService } from '../database.service';
+import { PlayerStats } from '../model/player-stats.model';
 
 interface RankingTableObj{
   name:string,
@@ -121,6 +122,10 @@ export class SingleMonthlyHighlightComponent implements OnInit {
           mostHorsesPlayerOverall = mostHorsesPlayerGame;
           mostHorsesGameIDOverall = mostHorsesGameId;
       }
+      else if(mostHorsesGame == mostHorsesOverall){
+        mostHorsesPlayerOverall += ", " + mostHorsesPlayerGame;
+        mostHorsesGameIDOverall = "morethan1";
+      }
     }
     const statObject: StatMonthTableObj = {
       stat: "Most horses in a game",
@@ -133,6 +138,33 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   }
 
   findMostCleanSheets(filteredMonth){
+    var cleanSheets: Map<string,number> = new Map();
+    for(let i =0 ; i < filteredMonth.length; i++){
+      var game: DatabaseObject = filteredMonth[i];
+      for(var key in game.scores){
+        var player = key;
+        var horses = game.scores[player][1]
+        if(horses == 0){
+          if(cleanSheets.has(player)){
+            cleanSheets.set(player, cleanSheets.get(player) + 1)
+          }
+          else{
+            cleanSheets.set(player, 1)
+          }
+
+        }
+      }
+    }
+    console.log("cleans heets")
+    console.log(cleanSheets)
+
+  }
+
+  findMostPointsInGame(filteredMonth){
+
+  }
+
+  findLeastPointsInGame(filteredMonth){
 
   }
 
