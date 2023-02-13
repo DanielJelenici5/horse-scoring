@@ -13,7 +13,7 @@ interface RankingTableObj{
 interface StatMonthTableObj{
   stat: string,
   player: string,
-  score: string,
+  score: number,
   gameId: string,
 }
 
@@ -130,7 +130,7 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     const statObject: StatMonthTableObj = {
       stat: "Most horses in a game",
       player: mostHorsesPlayerOverall,
-      score: mostHorsesOverall.toString(),
+      score: mostHorsesOverall,
       gameId: mostHorsesGameIDOverall,
     }
     this.sortedData2.push(statObject);
