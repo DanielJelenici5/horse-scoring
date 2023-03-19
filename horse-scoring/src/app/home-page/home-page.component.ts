@@ -17,13 +17,6 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     HorseGame.allGames = new Array();
-    this.databaseService.getAllData().then((response)=> {
-      for(let i = 0; i < response.length; i++){
-        const game = new HorseGame(response[i]["data"]["players"], response[i]["data"]["numRounds"], response[i]["data"]["dateTime"])
-        game.rounds = HorseGame.mapFromJson(response[i]["data"]["rounds"])
-        game.horses = HorseGame.mapFromJson(response[i]["data"]["horses"])
-      }
-     })
   }
 
   createNewGame(){

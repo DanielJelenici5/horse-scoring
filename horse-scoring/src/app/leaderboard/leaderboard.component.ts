@@ -24,9 +24,9 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit(): void {
     const allDBObjects: DatabaseObject[] = new Array();
     if(PlayerStats.allPlayerStats.length == 0){
-      this.databaseService.getAllData().then((response)=> {
+      this.databaseService.getAllJsonData().then((response)=> {
         for(let i = 0; i < response.length; i++){
-          allDBObjects.push(response[i]["data"])
+          allDBObjects.push(response[i])
         }
        }) 
       this.createPlayerStats(allDBObjects);

@@ -65,9 +65,9 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
     this.populateRankingsTable();
 
-    this.databaseService.getAllData().then((response)=> {
+    this.databaseService.getAllJsonData().then((response)=> {
       for(let i = 0; i < response.length; i++){
-        this.allDBObjects.push(response[i]["data"])
+        this.allDBObjects.push(response[i])
       }
      }) 
 

@@ -13,11 +13,17 @@ export class HorseGame {
 
     horses: Map<number, Map<string, boolean>>;
 
-    constructor(players: string[], rounds: number, dateTime: Date){
+    constructor(players: string[], rounds: number, dateTime: Date, id: string = null){
         if(HorseGame.allGames == null){
             HorseGame.allGames = new Array();
         }
-        this.id = (+new Date * Math.random()).toString(36).substring(0,8) 
+        if(id == null){
+            this.id = (+new Date * Math.random()).toString(36).substring(0,8) 
+        }
+        else{
+            this.id = id;
+        }
+        
         this.players = players;
         this.numRounds = rounds;
 

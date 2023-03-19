@@ -41,9 +41,9 @@ export class MonthlyHighlightsComponent implements OnInit {
   constructor(private databaseService: DatabaseService, private statcalcService: StatCalcService, private router: Router) { }
 
   ngOnInit(): void {
-    this.databaseService.getAllData().then((response)=> {
+    this.databaseService.getAllJsonData().then((response)=> {
       for(let i = 0; i < response.length; i++){
-        this.allDBObjects.push(response[i]["data"])
+        this.allDBObjects.push(response[i])
       }
      }) 
      this.generateData()
@@ -57,7 +57,7 @@ export class MonthlyHighlightsComponent implements OnInit {
 
   async generateData(){
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-    await sleep(1500)
+    await sleep(1700)
 
     this.sortedData = new Array();
 
