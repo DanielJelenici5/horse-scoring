@@ -6,8 +6,9 @@ import { DatabaseService } from '../database.service';
 import { PlayerStats } from '../model/player-stats.model';
 
 interface RankingTableObj{
-  name:string,
+  name: string,
   score: number,
+  gp: number
 }
 
 interface StatMonthTableObj{
@@ -30,7 +31,7 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
   formattedMonth: string;
 
-  displayedColumns: string[] = ["Player", "Calculated Score"];
+  displayedColumns: string[] = ["Player", "Calculated Score", "Games Played"];
   sortedData: RankingTableObj[];
 
   displayedColumns2: string[] = ["Stat", "Player", "Score", "Game"];
@@ -86,7 +87,8 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     for(let i =0 ; i < this.scores.length; i++){
       const rankingObject: RankingTableObj = {
         name: this.scores[i].name,
-        score: this.scores[i].score
+        score: this.scores[i].score,
+        gp: this.scores[i].gamesPlayed
       }
       this.sortedData.push(rankingObject)
     }
