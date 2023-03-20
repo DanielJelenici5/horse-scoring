@@ -14,7 +14,7 @@ interface StatMonthTableObj{
   stat: string,
   player: string,
   score: number,
-  gameId: string,
+  gameId: string[],
 }
 
 @Component({
@@ -40,11 +40,6 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   totalPlayers: number = 0;
   flooredAvg: number = 0;
 
-  mostHorsesinGame = {
-    player: "n/a",
-    game: "n/a",
-    horses: 0
-  }
 
   goToGame(gameId){
     this.router.navigate(["/past-game", gameId])
@@ -63,7 +58,6 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     this.scores = this.scores.filter(obj => obj.qualified)
     this.scores.sort(function(a,b){return b.score-a.score})
 
-    console.log(this.formattedMonth)
     this.populateRankingsTable();
 
     this.databaseService.getAllJsonData().then((response)=> {
@@ -81,7 +75,6 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     this.sortedData2 = new Array();
 
     const filteredMonth = this.allDBObjects.filter(obj =>(new Date(obj.dateTime)).toLocaleString('default', { month: 'long' }) + " " + (new Date(obj.dateTime)).getFullYear() === this.formattedMonth);
-
 
     this.findMostHorsesInGame(filteredMonth);
     this.findMostCleanSheets(filteredMonth);
@@ -102,8 +95,7 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
   findMostHorsesInGame(filteredMonth){
     var mostHorsesOverall = 0;
-    var mostHorsesPlayerOverall = "";
-    var mostHorsesGameIDOverall = "";
+    var mostHorsesOverallMap : Map<string, string[]> = new Map();
     for(let i =0 ; i < filteredMonth.length; i++){
       var game: DatabaseObject = filteredMonth[i];
       var mostHorsesGame = 0;
@@ -120,21 +112,45 @@ export class SingleMonthlyHighlightComponent implements OnInit {
       }
       if(mostHorsesGame > mostHorsesOverall){
           mostHorsesOverall = mostHorsesGame;
-          mostHorsesPlayerOverall = mostHorsesPlayerGame;
-          mostHorsesGameIDOverall = mostHorsesGameId;
+          mostHorsesOverallMap = new Map();
+          var mostHorsesGameIDArray : string[] = new Array();
+          mostHorsesGameIDArray.push(mostHorsesGameId);
+          mostHorsesOverallMap.set(mostHorsesPlayerGame, mostHorsesGameIDArray)
       }
       else if(mostHorsesGame == mostHorsesOverall){
-        mostHorsesPlayerOverall += ", " + mostHorsesPlayerGame;
-        mostHorsesGameIDOverall = "morethan1";
+        if(mostHorsesOverallMap.has(mostHorsesPlayerGame)){
+          mostHorsesOverallMap.get(mostHorsesPlayerGame).push(mostHorsesGameId)
+        }
+        else{
+          var mostHorsesGameIDArray : string[] = new Array();
+          mostHorsesGameIDArray.push(mostHorsesGameId);
+          mostHorsesOverallMap.set(mostHorsesPlayerGame, mostHorsesGameIDArray)
+        }
       }
     }
-    const statObject: StatMonthTableObj = {
-      stat: "Most horses in a game",
-      player: mostHorsesPlayerOverall,
-      score: mostHorsesOverall,
-      gameId: mostHorsesGameIDOverall,
+
+    //const mostHorsesPlayerOverallUnique = Array.from(new Set(mostHorsesPlayerOverall));
+    /*for(let i =0; i < mostHorsesPlayerOverall.length; i++){
+      const statObject: StatMonthTableObj = {
+        stat: "Most horses in a game",
+        player: mostHorsesPlayerOverall[i],
+        score: mostHorsesOverall,
+        gameId: mostHorsesGameIDOverall[i],
+      }
+      this.sortedData2.push(statObject);
+    }*/
+    for (const [key, value] of mostHorsesOverallMap) {
+      const statObject: StatMonthTableObj = {
+        stat: "Most horses in a game",
+        player: key,
+        score: mostHorsesOverall,
+        gameId: value,
+      }
+      this.sortedData2.push(statObject);
+
     }
-    this.sortedData2.push(statObject);
+ 
+ 
     
   }
 

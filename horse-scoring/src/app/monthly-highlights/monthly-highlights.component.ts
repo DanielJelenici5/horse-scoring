@@ -59,6 +59,7 @@ export class MonthlyHighlightsComponent implements OnInit {
     await sleep(1700)
 
     this.sortedData = new Array();
+    MonthlyPlayerStats.allMonthlyPlayerStats = [];
 
     for(let i= this.currentDisplayedMonths.length-1 ; i >= 0; i--){
       const monthlyHighlightObjectMonth = this.currentDisplayedMonths[i];
@@ -71,7 +72,6 @@ export class MonthlyHighlightsComponent implements OnInit {
         potm: potm,
         wpotm: wpotm,
       }
-      console.log(monthlyHighlightObject.month)
       this.sortedData.push(monthlyHighlightObject)
     }
   }
@@ -82,8 +82,6 @@ export class MonthlyHighlightsComponent implements OnInit {
 
     const totalGamesPlayed = monthlyPlayerStats.reduce((total, currentValue: PlayerStats) => total + currentValue.gamesPlayed, 0)
     const floorAverageGamesPlayed = Math.floor(totalGamesPlayed/monthlyPlayerStats.length);
-  
-    MonthlyPlayerStats.allMonthlyPlayerStats = [];
  
     for(let i=0; i < monthlyPlayerStats.length; i++){
       this.calculateAveragePlacementPre(monthlyPlayerStats[i])
