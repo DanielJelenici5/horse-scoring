@@ -9,7 +9,6 @@ import { MonthlyPlayerStats } from '../model/monthly-player-stats.model';
 interface MonthlyHighlightObject{
   month:string,
   potm: string,
-  mip: string,
   wpotm: string,
 }
 
@@ -33,10 +32,10 @@ export class MonthlyHighlightsComponent implements OnInit {
   
   allDBObjects: DatabaseObject[] = new Array();
 
-  displayedColumns: string[] = ["Month", "POTM", "MIP", "WPOTM","Additional Stats"];
+  displayedColumns: string[] = ["Month", "POTM", "WPOTM","Additional Stats"];
   sortedData: MonthlyHighlightObject[];
 
-  currentDisplayedMonths: string[] = ["January 2023"]
+  currentDisplayedMonths: string[] = ["January 2023", "February 2023"]
 
   constructor(private databaseService: DatabaseService, private statcalcService: StatCalcService, private router: Router) { }
 
@@ -61,27 +60,24 @@ export class MonthlyHighlightsComponent implements OnInit {
 
     this.sortedData = new Array();
 
-    for(let i= 0 ; i < this.currentDisplayedMonths.length; i++){
+    for(let i= this.currentDisplayedMonths.length-1 ; i >= 0; i--){
       const monthlyHighlightObjectMonth = this.currentDisplayedMonths[i];
       const filteredMonth = this.allDBObjects.filter(obj =>(new Date(obj.dateTime)).toLocaleString('default', { month: 'long' }) + " " + (new Date(obj.dateTime)).getFullYear() === this.currentDisplayedMonths[i]);
-      const scoreArray = this.calculatePOTM(filteredMonth);
+      const scoreArray = this.calculatePOTM(filteredMonth, this.currentDisplayedMonths[i]);
       const potm = scoreArray[0].name
       const wpotm = scoreArray[scoreArray.length - 1].name;
-      var mipotm = "n/a"
-      if(monthlyHighlightObjectMonth != "January 2023"){
-        //do most improved potm here
-      }
       const  monthlyHighlightObject = {
         month: monthlyHighlightObjectMonth,
         potm: potm,
-        mip: mipotm,
         wpotm: wpotm,
       }
+      console.log(monthlyHighlightObject.month)
       this.sortedData.push(monthlyHighlightObject)
     }
   }
 
-  calculatePOTM(array){
+
+  calculatePOTM(array, month){
     const monthlyPlayerStats: MonthlyPlayerStats[] = this.statcalcService.createStats(array, false, true)
 
     const totalGamesPlayed = monthlyPlayerStats.reduce((total, currentValue: PlayerStats) => total + currentValue.gamesPlayed, 0)
@@ -91,7 +87,7 @@ export class MonthlyHighlightsComponent implements OnInit {
  
     for(let i=0; i < monthlyPlayerStats.length; i++){
       this.calculateAveragePlacementPre(monthlyPlayerStats[i])
-      this.calculateScore(monthlyPlayerStats[i])
+      this.calculateScore(monthlyPlayerStats[i], month)
     }
     const filteredByGamesPlayed = monthlyPlayerStats.filter(obj => obj.gamesPlayed >= floorAverageGamesPlayed)
     filteredByGamesPlayed.map(obj => obj.qualified = true)
@@ -127,7 +123,7 @@ export class MonthlyHighlightsComponent implements OnInit {
     return parseFloat((sum / total).toFixed(2))
   }
 
-  calculateScore(playerStats: MonthlyPlayerStats){
+  calculateScore(playerStats: MonthlyPlayerStats, month : string){
     var score: number = 0;
 
     const winPercentagePoints = (playerStats.gamesWon / playerStats.gamesPlayed) * this.ScoringWeights.winPercentage
@@ -146,6 +142,6 @@ export class MonthlyHighlightsComponent implements OnInit {
     score += lostOnPoints;
 
     var monthlyPlayerStatObj: MonthlyPlayerStats = <MonthlyPlayerStats>playerStats;
-    monthlyPlayerStatObj.registerMonthlyPlayerStat("January 2023", parseFloat(score.toFixed(2)))
+    monthlyPlayerStatObj.registerMonthlyPlayerStat(month, parseFloat(score.toFixed(2)))
   }
 }

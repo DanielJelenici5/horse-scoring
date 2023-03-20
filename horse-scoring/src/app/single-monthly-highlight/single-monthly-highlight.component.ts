@@ -63,6 +63,7 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     this.scores = this.scores.filter(obj => obj.qualified)
     this.scores.sort(function(a,b){return b.score-a.score})
 
+    console.log(this.formattedMonth)
     this.populateRankingsTable();
 
     this.databaseService.getAllJsonData().then((response)=> {
@@ -70,7 +71,6 @@ export class SingleMonthlyHighlightComponent implements OnInit {
         this.allDBObjects.push(response[i])
       }
      }) 
-
      this.generateData()
   }
 
@@ -81,6 +81,7 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     this.sortedData2 = new Array();
 
     const filteredMonth = this.allDBObjects.filter(obj =>(new Date(obj.dateTime)).toLocaleString('default', { month: 'long' }) + " " + (new Date(obj.dateTime)).getFullYear() === this.formattedMonth);
+
 
     this.findMostHorsesInGame(filteredMonth);
     this.findMostCleanSheets(filteredMonth);
