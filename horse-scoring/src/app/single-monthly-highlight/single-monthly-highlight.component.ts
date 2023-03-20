@@ -129,16 +129,6 @@ export class SingleMonthlyHighlightComponent implements OnInit {
       }
     }
 
-    //const mostHorsesPlayerOverallUnique = Array.from(new Set(mostHorsesPlayerOverall));
-    /*for(let i =0; i < mostHorsesPlayerOverall.length; i++){
-      const statObject: StatMonthTableObj = {
-        stat: "Most horses in a game",
-        player: mostHorsesPlayerOverall[i],
-        score: mostHorsesOverall,
-        gameId: mostHorsesGameIDOverall[i],
-      }
-      this.sortedData2.push(statObject);
-    }*/
     for (const [key, value] of mostHorsesOverallMap) {
       const statObject: StatMonthTableObj = {
         stat: "Most horses in a game",
@@ -149,31 +139,52 @@ export class SingleMonthlyHighlightComponent implements OnInit {
       this.sortedData2.push(statObject);
 
     }
- 
- 
-    
+
   }
 
   findMostCleanSheets(filteredMonth){
-    var cleanSheets: Map<string,number> = new Map();
+    var cleanSheets: Map<string, string[]> = new Map();
     for(let i =0 ; i < filteredMonth.length; i++){
       var game: DatabaseObject = filteredMonth[i];
       for(var key in game.scores){
         var player = key;
         var horses = game.scores[player][1]
+        var gameId = game.id;
         if(horses == 0){
           if(cleanSheets.has(player)){
-            cleanSheets.set(player, cleanSheets.get(player) + 1)
+            cleanSheets.get(player).push(gameId);
           }
           else{
-            cleanSheets.set(player, 1)
+            const gameIdArray = new Array();
+            gameIdArray.push(gameId);
+            cleanSheets.set(player, gameIdArray);
           }
 
         }
       }
     }
-    console.log("cleans heets")
-    console.log(cleanSheets)
+
+
+    if(cleanSheets.size == 0){
+      const statObject: StatMonthTableObj = {
+        stat: "Most Clean Sheets",
+        player: "n/a",
+        score: 0,
+        gameId: [],
+      }
+      this.sortedData2.push(statObject);
+    }
+    else{
+      for (const [key, value] of cleanSheets) {
+        const statObject: StatMonthTableObj = {
+          stat: "Most Clean Sheets",
+          player: key,
+          score: value.length,
+          gameId: value,
+        }
+        this.sortedData2.push(statObject);
+    }
+    }
 
   }
 
