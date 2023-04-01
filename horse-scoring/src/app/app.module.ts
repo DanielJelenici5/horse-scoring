@@ -39,6 +39,8 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 import { NgxStarsModule } from 'ngx-stars';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -70,7 +72,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NotifierModule,
     CommonModule, 
     NgxStarsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

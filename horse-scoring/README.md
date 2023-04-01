@@ -24,4 +24,4 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 ## Deploy to Github Pages
 
-ng deploy --base-href=https://danieljelenici5.github.io/horse-scoring/
+`ng deploy --base-href=https://danieljelenici5.github.io/horse-scoring/`

@@ -31,7 +31,7 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
   formattedMonth: string;
 
-  displayedColumns: string[] = ["Player", "Calculated Score", "Games Played"];
+  displayedColumns: string[] = ["Player", "Calculated Score", "Games Played", "Point Breakdown"];
   sortedData: RankingTableObj[];
 
   displayedColumns2: string[] = ["Stat", "Player", "Score", "Game"];
@@ -40,6 +40,8 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   totalGamesPlayed: number = 0;
   totalPlayers: number = 0;
   flooredAvg: number = 0;
+
+  viewingPointsFor: MonthlyPlayerStats;
 
 
   goToGame(gameId){
@@ -52,6 +54,8 @@ export class SingleMonthlyHighlightComponent implements OnInit {
   ngOnInit(): void {
     this.formattedMonth = this.ActivedRoute.snapshot.paramMap.get("month").split('-').join(' ')
     this.scores = MonthlyPlayerStats.getAllByMonth(this.formattedMonth);
+    //temp value below so it doesnt cause null pointer exception
+    this.viewingPointsFor = this.scores[0];
     this.totalGamesPlayed = this.scores.reduce((total, currentValue: MonthlyPlayerStats) => total + currentValue.gamesPlayed, 0)
     this.totalPlayers = this.scores.length;
     this.flooredAvg = Math.floor(this.totalGamesPlayed/this.totalPlayers)
@@ -198,5 +202,11 @@ export class SingleMonthlyHighlightComponent implements OnInit {
 
   }
 
+  updateViewPointsFor(element){
+    this.viewingPointsFor = this.scores.find(score => score.name == element.name)
+  }
+
 }
+
+
 

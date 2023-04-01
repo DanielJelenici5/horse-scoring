@@ -2,6 +2,7 @@
 <br>
 
 <h2 style="text-align: center;">3 Stars Of The Month</h2>
+
 <table mat-table [dataSource]="sortedData" style="margin: 0px auto;">
     <ng-container matColumnDef="Player">
         <th mat-header-cell *matHeaderCellDef> Player </th>
@@ -14,6 +15,8 @@
             <ngx-stars *ngIf = "i == 0" [readonly]="true" [maxStars]="1" [initialStars]="1"></ngx-stars>
             <ngx-stars *ngIf = "i == 1" [readonly]="true" [maxStars]="2" [initialStars]="2"></ngx-stars>
             <ngx-stars *ngIf = "i == 2" [readonly]="true" [maxStars]="3" [initialStars]="3"></ngx-stars>
+
+			
             </div>
         </td>
     </ng-container>
@@ -26,6 +29,11 @@
     <ng-container matColumnDef="Games Played">
         <th mat-header-cell *matHeaderCellDef> Games Played </th>
         <td mat-cell *matCellDef="let element"> {{element.gp}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Point Breakdown">
+        <th mat-header-cell *matHeaderCellDef>Point Breakdown</th>
+        <td mat-cell *matCellDef="let element"> <button class="btn btn-primary" data-toggle="modal" data-target="#PointBreakdown" (click) = "updateViewPointsFor(element)" >See Points</button> </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -83,6 +91,27 @@
                     <span>{{obj.name}} -> Games Played: {{obj.gamesPlayed}} -> Calulcated Score: {{obj.score}}</span>
                 </li>
              </ul>
+             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <div id="PointBreakdown" class="modal fade">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 style="text-align: center;" class="modal-title">Points Breakdown For {{viewingPointsFor.name}}</h1>
+            </div>
+            <div class="modal-body">
+            <p>Games played this month: {{viewingPointsFor.gamesPlayed}} </p>
+            <p>Win Percentage this month: {{viewingPointsFor.gamesWon}}/{{viewingPointsFor.gamesPlayed}} = {{(viewingPointsFor.gamesWon / viewingPointsFor.gamesPlayed).toFixed(2)}} * <b>20</b> = {{((viewingPointsFor.gamesWon / viewingPointsFor.gamesPlayed) * 20 ).toFixed(2)}} points</p>
+            <p>Average Placement this month: {{viewingPointsFor.averagePlacement}}  = <b>8</b> - {{viewingPointsFor.averagePlacement}}  * <b>2</b> = {{((8 - viewingPointsFor.averagePlacement) * 2).toFixed(2)}} points</p>
+            <p>Points Per Round for this month: {{viewingPointsFor.totalPoints}}/{{viewingPointsFor.roundsPlayed}} = {{(viewingPointsFor.totalPoints / viewingPointsFor.roundsPlayed).toFixed(2)}} * <b>3</b> = {{((viewingPointsFor.totalPoints / viewingPointsFor.roundsPlayed) * 3 ).toFixed(2)}} points</p>
+            <p>Games Lost On Horses for this month: {{viewingPointsFor.gamesLostOnHorses}} * <b>-1</b> = {{(viewingPointsFor.gamesLostOnHorses * -1 ).toFixed(2)}} points</p>
+            <p>Games Lost On Points for this month: {{viewingPointsFor.gamesLostOnPoints}} * <b>-1</b> = {{(viewingPointsFor.gamesLostOnPoints * -1 ).toFixed(2)}} points</p>
+
              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->

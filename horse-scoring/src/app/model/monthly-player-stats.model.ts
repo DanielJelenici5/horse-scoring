@@ -7,6 +7,7 @@ export class MonthlyPlayerStats extends PlayerStats {
     public static allMonthlyPlayerStats: MonthlyPlayerStats[] = new Array();
     public qualified: boolean = false;
 
+
     constructor(name, addToStaticList){
         super(name, false);
     }

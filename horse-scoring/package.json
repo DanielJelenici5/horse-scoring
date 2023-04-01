@@ -24,6 +24,7 @@
     "canvasjs": "^1.8.3",
     "chart.js": "^4.1.1",
     "jquery": "^3.6.3",
+    "material-design-icons": "^3.0.1",
     "ngx-stars": "^1.6.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
