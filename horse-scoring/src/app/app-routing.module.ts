@@ -10,6 +10,7 @@ import { PastGamesComponent } from './past-games/past-games.component';
 import { SinglePastGameComponent } from './single-past-game/single-past-game.component';
 import { MonthlyHighlightsComponent } from './monthly-highlights/monthly-highlights.component';
 import { SingleMonthlyHighlightComponent } from './single-monthly-highlight/single-monthly-highlight.component';
+import { MonthPastGamesComponent } from './month-past-games/month-past-games.component';
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'monthly-highlights/:month', component: SingleMonthlyHighlightComponent}, 
   {path: 'past-games', component: PastGamesComponent},
   {path: 'past-game/:gameId', component: SinglePastGameComponent},
-  {path: 'new-game/:id', component: ScoringBoardComponent}
+  {path: 'new-game/:id', component: ScoringBoardComponent},
+  {path: 'past-games/:month', component: MonthPastGamesComponent}
 ];
 
 @NgModule({

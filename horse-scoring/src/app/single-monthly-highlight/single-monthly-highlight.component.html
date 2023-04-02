@@ -2,6 +2,9 @@
 <br>
 
 <h2 style="text-align: center;">3 Stars Of The Month</h2>
+<div style="text-align: center;">
+    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#NoQualify" >Who didn't qualify for POTM?</button>
+</div>
 
 <table mat-table [dataSource]="sortedData" style="margin: 0px auto;">
     <ng-container matColumnDef="Player">
@@ -40,12 +43,15 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<br>
-<div style="text-align: center;">
-    <button class="btn btn-primary" data-toggle="modal" data-target="#NoQualify" >Who didn't qualify for POTM?</button>
-</div>
+
 
 <br>
+
+<div style="text-align: center;">
+    <button class="btn btn-primary" (click)="goToMonthsGames()" >View All Games This Month</button>
+</div>
+
+
 <br>
 <h2 style="text-align: center;">Stats Of The Month</h2>
 
@@ -81,7 +87,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 style="text-align: center;" class="modal-title">Calculating POTM</h1>
+                <h1 style="text-align: center;" class="modal-title">Who Didn't Qualify</h1>
             </div>
             <div class="modal-body">
              <p>The average amount of games played for this month was: {{(totalGamesPlayed/totalPlayers).toFixed(2)}}, flooring that is: {{flooredAvg}} </p>

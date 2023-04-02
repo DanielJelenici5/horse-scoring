@@ -332,7 +332,13 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     this.viewingPointsFor = this.scores.find(score => score.name == element.name)
   }
 
+  goToMonthsGames(){
+    this.router.navigate(["/past-games", this.ActivedRoute.snapshot.paramMap.get("month")])
+  }
+
 }
+
+
 
 
 

@@ -40,6 +40,7 @@ import { NgxStarsModule } from 'ngx-stars';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { MatIconModule } from '@angular/material/icon';
+import { MonthPastGamesComponent } from './month-past-games/month-past-games.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { MatIconModule } from '@angular/material/icon';
     StatGraphsComponent,
     CanvasJSChart,
     MonthlyHighlightsComponent,
-    SingleMonthlyHighlightComponent
+    SingleMonthlyHighlightComponent,
+    MonthPastGamesComponent
   ],
   imports: [
     BrowserModule,
