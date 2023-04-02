@@ -82,7 +82,10 @@ export class SingleMonthlyHighlightComponent implements OnInit {
     const filteredMonth = this.allDBObjects.filter(obj =>(new Date(obj.dateTime)).toLocaleString('default', { month: 'long' }) + " " + (new Date(obj.dateTime)).getFullYear() === this.formattedMonth);
 
     this.findMostHorsesInGame(filteredMonth);
-    this.findMostCleanSheets(filteredMonth);
+    this.findLeastHorsesInGame(filteredMonth);
+    //this.findMostCleanSheets(filteredMonth);
+    this.findMostPointsInGame(filteredMonth);
+    this.findLeastPointsInGame(filteredMonth);
 
   }
 
@@ -135,17 +138,58 @@ export class SingleMonthlyHighlightComponent implements OnInit {
       }
     }
 
-    for (const [key, value] of mostHorsesOverallMap) {
-      const statObject: StatMonthTableObj = {
-        stat: "Most horses in a game",
-        player: key,
-        score: mostHorsesOverall,
-        gameId: value,
+    const statObject: StatMonthTableObj = {
+      stat: "Most horses in a game",
+      player: Array.from(mostHorsesOverallMap.keys()).join(", "),
+      score: mostHorsesOverall,
+      gameId: Array.from(mostHorsesOverallMap.values()).flat(),
+    }
+    this.sortedData2.push(statObject);
+  }
+  
+  findLeastHorsesInGame(filteredMonth){
+    var leastHorsesOverall = Infinity;
+    var leastHorsesOverallMap : Map<string, string[]> = new Map();
+    for(let i =0 ; i < filteredMonth.length; i++){
+      var game: DatabaseObject = filteredMonth[i];
+      var leastHorsesGame = Infinity;
+      var leastHorsesPlayerGame = "";
+      var leastHorsesGameId = "";
+      for(var key in game.scores){
+        var player = key;
+        var horses = game.scores[player][1]
+        if(horses < leastHorsesGame){
+          leastHorsesGame = horses;
+          leastHorsesPlayerGame = player;
+          leastHorsesGameId = game.id;
+        }
       }
-      this.sortedData2.push(statObject);
-
+      if(leastHorsesGame < leastHorsesOverall){
+        leastHorsesOverall = leastHorsesGame;
+        leastHorsesOverallMap = new Map();
+        var leastHorsesGameIDArray : string[] = new Array();
+        leastHorsesGameIDArray.push(leastHorsesGameId);
+        leastHorsesOverallMap.set(leastHorsesPlayerGame, leastHorsesGameIDArray)
+      }
+      else if(leastHorsesGame == leastHorsesOverall){
+        if(leastHorsesOverallMap.has(leastHorsesPlayerGame)){
+          leastHorsesOverallMap.get(leastHorsesPlayerGame).push(leastHorsesGameId)
+        }
+        else{
+          var leastHorsesGameIDArray : string[] = new Array();
+          leastHorsesGameIDArray.push(leastHorsesGameId);
+          leastHorsesOverallMap.set(leastHorsesPlayerGame, leastHorsesGameIDArray)
+        }
+      }
     }
 
+    const statObject: StatMonthTableObj = {
+      stat: "Least horses in a game",
+      player: Array.from(leastHorsesOverallMap.keys()).join(", "),
+      score: leastHorsesOverall,
+      gameId: Array.from(leastHorsesOverallMap.values()).flat(),
+    }
+    this.sortedData2.push(statObject);
   }
 
   findMostCleanSheets(filteredMonth){
@@ -170,10 +214,9 @@ export class SingleMonthlyHighlightComponent implements OnInit {
       }
     }
 
-
     if(cleanSheets.size == 0){
       const statObject: StatMonthTableObj = {
-        stat: "Most Clean Sheets",
+        stat: "Most clean sheets",
         player: "n/a",
         score: 0,
         gameId: [],
@@ -181,25 +224,108 @@ export class SingleMonthlyHighlightComponent implements OnInit {
       this.sortedData2.push(statObject);
     }
     else{
-      for (const [key, value] of cleanSheets) {
-        const statObject: StatMonthTableObj = {
-          stat: "Most Clean Sheets",
-          player: key,
-          score: value.length,
-          gameId: value,
-        }
-        this.sortedData2.push(statObject);
+    const statObject: StatMonthTableObj = {
+      stat: "Most clean sheets",
+      player: Array.from(cleanSheets.keys()).join(", "),
+      score: cleanSheets.values().next().value.length,
+      gameId: Array.from(cleanSheets.values()).flat(),
     }
+    this.sortedData2.push(statObject);
     }
 
   }
 
   findMostPointsInGame(filteredMonth){
+    var mostPointsOverall = 0;
+    var mostPointsOverallMap : Map<string, string[]> = new Map();
+    for(let i =0 ; i < filteredMonth.length; i++){
 
+      var game: DatabaseObject = filteredMonth[i];
+      var mostPointsGame = 0;
+      var mostPointsPlayerGame = "";
+      var mostPointsGameId = "";
+      for(var key in game.scores){
+        var player = key;
+        var points = game.scores[player][0]
+        if(points > mostPointsGame){
+          mostPointsGame = points;
+          mostPointsPlayerGame = player;
+          mostPointsGameId = game.id;
+        }
+      }
+      if(mostPointsGame > mostPointsOverall){
+          mostPointsOverall = mostPointsGame;
+          mostPointsOverallMap = new Map();
+          var mostPointsGameIDArray : string[] = new Array();
+          mostPointsGameIDArray.push(mostPointsGameId);
+          mostPointsOverallMap.set(mostPointsPlayerGame, mostPointsGameIDArray)
+      }
+      else if(mostPointsGame == mostPointsOverall){
+        if(mostPointsOverallMap.has(mostPointsPlayerGame)){
+          mostPointsOverallMap.get(mostPointsPlayerGame).push(mostPointsGameId)
+        }
+        else{
+          var mostPointsGameIDArray : string[] = new Array();
+          mostPointsGameIDArray.push(mostPointsGameId);
+          mostPointsOverallMap.set(mostPointsPlayerGame, mostPointsGameIDArray)
+        }
+      }
+    }
+
+    const statObject: StatMonthTableObj = {
+      stat: "Most points in a game",
+      player: Array.from(mostPointsOverallMap.keys()).join(", "),
+      score: mostPointsOverall,
+      gameId: Array.from(mostPointsOverallMap.values()).flat(),
+    }
+    this.sortedData2.push(statObject);
   }
 
   findLeastPointsInGame(filteredMonth){
+    var leastPointsOverall = Infinity;
+    var leastPointsOverallMap : Map<string, string[]> = new Map();
+    for(let i =0 ; i < filteredMonth.length; i++){
 
+      var game: DatabaseObject = filteredMonth[i];
+      var leastPointsGame = Infinity;
+      var leastPointsPlayerGame = "";
+      var leastPointsGameId = "";
+      for(var key in game.scores){
+        var player = key;
+        var points = game.scores[player][0]
+        if(points < leastPointsGame){
+          leastPointsGame = points;
+          leastPointsPlayerGame = player;
+          leastPointsGameId = game.id;
+        }
+      }
+      if(leastPointsGame < leastPointsOverall){
+          leastPointsOverall = leastPointsGame;
+          leastPointsOverallMap = new Map();
+          var leastPointsGameIDArray : string[] = new Array();
+          leastPointsGameIDArray.push(leastPointsGameId);
+          leastPointsOverallMap.set(leastPointsPlayerGame, leastPointsGameIDArray)
+      }
+      else if(leastPointsGame == leastPointsOverall){
+        if(leastPointsOverallMap.has(leastPointsPlayerGame)){
+          leastPointsOverallMap.get(leastPointsPlayerGame).push(leastPointsGameId)
+        }
+        else{
+          var leastPointsGameIDArray : string[] = new Array();
+          leastPointsGameIDArray.push(leastPointsGameId);
+          leastPointsOverallMap.set(leastPointsPlayerGame, leastPointsGameIDArray)
+        }
+      }
+    }
+
+
+    const statObject: StatMonthTableObj = {
+      stat: "Least points in a game",
+      player: Array.from(leastPointsOverallMap.keys()).join(", "),
+      score: leastPointsOverall,
+      gameId: Array.from(leastPointsOverallMap.values()).flat(),
+    }
+    this.sortedData2.push(statObject);
   }
 
   updateViewPointsFor(element){
