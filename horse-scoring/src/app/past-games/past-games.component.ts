@@ -30,10 +30,7 @@ export class PastGamesComponent implements OnInit {
     this.databaseService.getAllJsonData().then((response)=> {
       for(let i = 0; i < response.length; i++){
         this.allDBObjects.push(response[i])
-        console.log(response[i].id)
-        console.log(response[i].dateTime)
       }
-      console.log("did this with json")
     })
     this.generateTable()
   }

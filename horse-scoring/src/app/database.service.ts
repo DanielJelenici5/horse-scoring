@@ -16,8 +16,8 @@ export class DatabaseService {
     var returnData : DatabaseObject[] = new Array();
     fetch("assets/data/data.json").then(response => response.json()).then(dbObjectArray => {
       for(let i = 0; i <  dbObjectArray.length; i++){
-        const game = new HorseGame(dbObjectArray[i].data.players, dbObjectArray[i].data.numRounds, new Date(dbObjectArray[i].data.dateTime), dbObjectArray[i].data.id) ;
-        returnData.push(new DatabaseObject(game, dbObjectArray[i].data.scores));
+        const game = new HorseGame(dbObjectArray[i].data.players, dbObjectArray[i].data.numRounds, new Date(dbObjectArray[i].data.dateTime), dbObjectArray[i].data.id);
+        returnData.push(new DatabaseObject(game, dbObjectArray[i].data.scores,dbObjectArray[i].data.tiebreak ));
       }
     });
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

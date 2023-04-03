@@ -9,13 +9,17 @@ export class DatabaseObject {
 
     public scores; //ex: {"Danny": [10,2]}
 
-    constructor(game: HorseGame, scores){
+    public tiebreakers;
+
+    constructor(game: HorseGame, scores, tiebreaker = null){
         this.id = game.id;
         this.dateTime = game.dateTime;
         this.players = game.players;
         this.numRounds = game.numRounds;
 
         this.scores = scores
+
+        this.tiebreakers = tiebreaker;
 
     }
 }

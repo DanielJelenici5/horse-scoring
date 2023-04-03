@@ -14,8 +14,19 @@
             </td>
           </ng-container>
 
+        <ng-container *ngIf="dbObject.tiebreakers != null && dbObject.tiebreakers.horses != null" matColumnDef="tiebreakerHorses">
+            <td mat-footer-cell *matFooterCellDef [attr.colspan]="dbObject.players.length + 1" style="font-size: 20px">
+            <i>Tiebreak For Most Horses -> </i> <b>Won:</b> {{dbObject.tiebreakers.horses.won}}   <b>Lost:</b> {{dbObject.tiebreakers.horses.lost}} 
+            </td>
+        </ng-container>
 
-          <ng-container matColumnDef="disclaimer">
+        <ng-container *ngIf="dbObject.tiebreakers != null && dbObject.tiebreakers.points != null" matColumnDef="tiebreakerPoints">
+            <td mat-footer-cell *matFooterCellDef [attr.colspan]="dbObject.players.length + 1" style="font-size: 20px">
+            <i>Tiebreak For Least Points -> </i> <b>Won:</b> {{dbObject.tiebreakers.points.won}}   <b>Lost:</b> {{dbObject.tiebreakers.points.lost}} 
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="otherInfo">
             <td mat-footer-cell *matFooterCellDef [attr.colspan]="dbObject.players.length + 1" style="font-size: 20px">
            <b>Date:</b>  {{ dateObject}}, <b>Starting Hand:</b> {{dbObject.numRounds/2}}
             </td>
@@ -23,6 +34,12 @@
     
         <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="['disclaimer']"></tr>
+        <ng-container *ngIf="dbObject.tiebreakers != null && dbObject.tiebreakers.horses != null">
+            <tr mat-footer-row *matFooterRowDef="['tiebreakerHorses']"></tr>
+        </ng-container>
+        <ng-container *ngIf="dbObject.tiebreakers != null && dbObject.tiebreakers.points != null">
+            <tr mat-footer-row *matFooterRowDef="['tiebreakerPoints']"></tr>
+        </ng-container>
+        <tr mat-footer-row *matFooterRowDef="['otherInfo']"></tr>
         
     </table>
