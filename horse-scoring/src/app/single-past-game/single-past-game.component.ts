@@ -27,6 +27,8 @@ export class SinglePastGameComponent implements OnInit {
   tableData: DisplayObject[];
   tableColumns: string[];
 
+  imagePath:string = "assets/images/data/" + this.gameId +".jpeg"
+
   constructor(private ActivedRoute: ActivatedRoute, private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
