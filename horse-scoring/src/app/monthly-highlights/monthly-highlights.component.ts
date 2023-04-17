@@ -56,7 +56,7 @@ export class MonthlyHighlightsComponent implements OnInit {
 
   async generateData(){
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-    await sleep(1700)
+    await sleep(2000)
 
     this.sortedData = new Array();
     MonthlyPlayerStats.allMonthlyPlayerStats = [];
