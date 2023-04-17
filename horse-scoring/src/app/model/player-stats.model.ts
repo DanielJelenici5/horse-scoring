@@ -12,6 +12,8 @@ export class PlayerStats {
     public gamesLostOnPoints: number;
     public gamesLostOnHorses: number;
     public roundsPlayed: number;
+    public tiebreakersWon: number;
+    public tiebreakersLost: number;
 
     constructor(name, addToStaticList){
         this.name = name.toLowerCase()//.split(' ').join('');
@@ -26,6 +28,8 @@ export class PlayerStats {
         this.gamesLostOnPoints = 0;
         this.roundsPlayed = 0;
         this.averagePlacement = 0;
+        this.tiebreakersWon = 0;
+        this.tiebreakersLost = 0;
 
         this.placementFinished = new Map()
 

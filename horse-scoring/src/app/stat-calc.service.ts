@@ -34,6 +34,25 @@ export class StatCalcService {
         playerStats.roundsPlayed += dbObject.numRounds;
         playerStats.totalPoints += dbObject.scores[player][0]
         playerStats.totalHorses += dbObject.scores[player][1]
+        if(dbObject.tiebreakers != null){
+          if(dbObject.tiebreakers.points != null){
+            if(dbObject.tiebreakers.points.won.toLowerCase() === player.toLowerCase()){
+              playerStats.tiebreakersWon++;
+            }
+            if(dbObject.tiebreakers.points.lost.toLowerCase() === player.toLowerCase()){
+              playerStats.tiebreakersLost++;
+            }
+          }
+          if(dbObject.tiebreakers.horses != null){
+            if(dbObject.tiebreakers.horses.won.toLowerCase() === player.toLowerCase()){
+              playerStats.tiebreakersWon++;
+            }
+            if(dbObject.tiebreakers.horses.lost.toLowerCase() === player.toLowerCase()){
+              playerStats.tiebreakersLost++;
+            }
+          }
+        }
+
         this.giveWinStat(dbObject.scores, playerStats, player);
         this.giveLosePointsStat(dbObject.scores, playerStats, player);
         this.giveLoseHorseStat(dbObject.scores, playerStats, player);

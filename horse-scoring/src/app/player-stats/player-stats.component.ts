@@ -33,7 +33,7 @@ export class PlayerStatsComponent implements OnInit {
 
   averagePlacement: number = 0;
 
-  displayedColumns: string[] = ["Games Played", "Games Won", "Win %", "Total Points", "Average Points per Game", "Average Points per Round", "Total Horses", "Average Horses per Game", "Average Horses per Round", "Total Losses By Points", "Total Losses By Horses"];
+  displayedColumns: string[] = ["Games Played", "Games Won", "Win %", "Total Points", "Average Points per Game", "Total Horses", "Average Horses per Game",  "Total Losses By Points", "Total Losses By Horses", "TieBreakers Won", "TieBreakers Lost", "Average Points per Round","Average Horses per Round"];
   placemenetColumns: string[] = ["1st","2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
 
   

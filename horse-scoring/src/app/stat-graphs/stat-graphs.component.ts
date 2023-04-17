@@ -77,6 +77,12 @@ export class StatGraphsComponent implements OnInit {
       case "totalLossesHorses":
         this.setTotalLossesHorses();
         break;
+      case "tieBreakersWon":
+        this.setTireBreakersWon();
+        break;
+      case "tieBreakersLost":
+        this.setTireBreakersLost();
+        break;
     }
     this.updateChart()
       
@@ -302,6 +308,42 @@ export class StatGraphsComponent implements OnInit {
     for(let i =0; i < this.allPlayerStats.length; i++){
       var currentPlayerStats: PlayerStats = this.allPlayerStats[i]
       var obj = {  label: currentPlayerStats.name, y: currentPlayerStats.gamesLostOnHorses}
+      if(currentPlayerStats.name === this.currentPlayer){
+        obj["color"] = "red"
+      }
+      else{
+        obj["color"] = "RoyalBlue"
+      }
+      this.chartOptions["data"][0]["dataPoints"].push(obj)
+    }
+  }
+
+  setTireBreakersWon(){
+    this.chartOptions["data"][0]["dataPoints"] = []
+    this.allPlayerStats.sort(function(a,b){
+      return b.tiebreakersWon - a.tiebreakersWon;
+    });
+    for(let i =0; i < this.allPlayerStats.length; i++){
+      var currentPlayerStats: PlayerStats = this.allPlayerStats[i]
+      var obj = {  label: currentPlayerStats.name, y: currentPlayerStats.tiebreakersWon}
+      if(currentPlayerStats.name === this.currentPlayer){
+        obj["color"] = "red"
+      }
+      else{
+        obj["color"] = "RoyalBlue"
+      }
+      this.chartOptions["data"][0]["dataPoints"].push(obj)
+    }
+  }
+
+  setTireBreakersLost(){
+    this.chartOptions["data"][0]["dataPoints"] = []
+    this.allPlayerStats.sort(function(a,b){
+      return b.tiebreakersLost - a.tiebreakersLost;
+    });
+    for(let i =0; i < this.allPlayerStats.length; i++){
+      var currentPlayerStats: PlayerStats = this.allPlayerStats[i]
+      var obj = {  label: currentPlayerStats.name, y: currentPlayerStats.tiebreakersLost}
       if(currentPlayerStats.name === this.currentPlayer){
         obj["color"] = "red"
       }
