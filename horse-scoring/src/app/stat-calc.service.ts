@@ -12,6 +12,7 @@ export class StatCalcService {
   constructor() {}
 
   createStats(allDBObjects, addToStaticList, monthlyStats){
+
     
     this.playerStatArray = new Array();
     for(let i =0; i < allDBObjects.length; i++){
@@ -28,6 +29,7 @@ export class StatCalcService {
           
         }
       }
+
       for(var player in dbObject.scores){
         var playerStats : PlayerStats = this.playerStatArray.filter(obj => obj.name.toLowerCase() === player.toLowerCase())[0] // PlayerStats.getPlayerStats(player)
         playerStats.gamesPlayed++;
@@ -36,7 +38,8 @@ export class StatCalcService {
         playerStats.totalHorses += dbObject.scores[player][1]
         if(dbObject.tiebreakers != null){
           if(dbObject.tiebreakers.points != null){
-            if(dbObject.tiebreakers.points.won.toLowerCase() === player.toLowerCase()){
+            const winnersPoints = dbObject.tiebreakers.points.won.split(", ").map(element => element.toLowerCase());
+            if(winnersPoints.includes(player.toLowerCase())){
               playerStats.tiebreakersWon++;
             }
             if(dbObject.tiebreakers.points.lost.toLowerCase() === player.toLowerCase()){
@@ -44,7 +47,8 @@ export class StatCalcService {
             }
           }
           if(dbObject.tiebreakers.horses != null){
-            if(dbObject.tiebreakers.horses.won.toLowerCase() === player.toLowerCase()){
+            const winnersHorses = dbObject.tiebreakers.horses.won.split(", ").map(element => element.toLowerCase());
+            if(winnersHorses.includes(player.toLowerCase())){
               playerStats.tiebreakersWon++;
             }
             if(dbObject.tiebreakers.horses.lost.toLowerCase() === player.toLowerCase()){
