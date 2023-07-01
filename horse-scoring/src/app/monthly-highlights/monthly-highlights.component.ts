@@ -35,7 +35,7 @@ export class MonthlyHighlightsComponent implements OnInit {
   displayedColumns: string[] = ["Month", "POTM", "WPOTM","Additional Stats"];
   sortedData: MonthlyHighlightObject[];
 
-  currentDisplayedMonths: string[] = ["January 2023", "February 2023", "March 2023", "April 2023", "May 2023"]
+  currentDisplayedMonths: string[] = ["January 2023", "February 2023", "March 2023", "April 2023", "May 2023", "June 2023"]
 
   constructor(private databaseService: DatabaseService, private statcalcService: StatCalcService, private router: Router) { }
 
